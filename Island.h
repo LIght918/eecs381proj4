@@ -1,6 +1,7 @@
 #ifndef ISLAND_H
 #define ISLAND_H
 #include "Sim_object.h"
+#include <string>
 
 /***** Island Class *****/
 /* Islands are a kind of Sim_object; they have an amount of fuel and a an amount by which it increases
@@ -8,18 +9,10 @@ every update (default is zero). The can also provide or accept fuel, and update 
 accordingly.
 */
 
-/* 
-This skeleton file shows the required public and protected interface for the class, which you may not modify. 
-If no protected members are shown, there must be none in your version. 
-If any protected or private members are shown here, then your class must also have them and use them as intended.
-You should delete this comment.
-*/
-
-class Island : Sim_object {
+class Island : public Sim_object {
 public:
     // initialize then output constructor message
-    Island(const std::string &name_, Point position_, double fuel_ = 0., double production_rate_ = 0.) :
-            position(position_), fuel(fuel_), production_rate(production_rate_) {}
+    Island(const std::string &name_, Point position_, double fuel_ = 0., double production_rate_ = 0.);
 
     // output destructor message
     ~Island();
@@ -50,8 +43,8 @@ public:
 
 private:
     Point position;                // Location of this island
-    double fuel;
-    double production_rate;
+    double fuel;                   // Amount of fuel this island has
+    double production_rate;        // Production rate of this island
 };
 
 #endif

@@ -1,15 +1,128 @@
+#include "Ship.h"
+#include <string>
+#include <iostream>
+
+using namespace std;
+
+Ship::Ship(const string &name_, Point position_, double fuel_capacity_,
+        double maximum_speed_, double fuel_consumption_, int resistance_) :
+        Sim_object(name_), fuel_consumption(fuel_consumption_), resistance(resistance_), max_speed(maximum_speed_),
+        Track_base(position_, Course_speed(0, 0)), ship_state(State::STOPPED)
+{
+    cout << "Ship " << get_name() << " constructed\n";
+}
 
 /*
 Define the destructor function even if it was declared as a pure virtual function.
 This seems odd, because pure virtual functions are usually not defined in the class
-that declares them. But this is often done as a way to make a class abstract, 
+that declares them. But this is often done as a way to make a class abstract,
 if there is no other virtual function that makes sense to mark as pure. Here we
 are defining it just to get the destructor message output.
 */
 
 Ship::~Ship()
 {
-	cout << "Ship "  << get_name() << " destructed" << endl;
+    cout << "Ship "  << get_name() << " destructed" << endl;
+}
+
+/*** Interface to derived classes ***/
+// Update the state of the Ship
+void Ship::update() override
+{
+
+}
+
+// output a description of current state to cout
+void Ship::describe() const override
+{
+
+}
+
+void Ship::broadcast_current_state() override
+{
+
+}
+
+/*** Command functions ***/
+// Start moving to a destination position at a speed
+// may throw Error("Ship cannot move!")
+// may throw Error("Ship cannot go that fast!")
+virtual void Ship::set_destination_position_and_speed(Point destination_position, double speed)
+{
+
+}
+
+// Start moving on a course and speed
+// may throw Error("Ship cannot move!")
+// may throw Error("Ship cannot go that fast!");
+virtual void Ship::set_course_and_speed(double course, double speed)
+{
+
+}
+
+// Stop moving
+// may throw Error("Ship cannot move!");
+virtual void Ship::stop()
+{
+
+}
+
+// dock at an Island - set our position = Island's position, go into Docked state
+// may throw Error("Can't dock!");
+virtual void Ship::dock(Island *island_ptr)
+{
+
+}
+
+// Refuel - must already be docked at an island; fill takes as much as possible
+// may throw Error("Must be docked!");
+virtual void Ship::refuel()
+{
+
+}
+
+/*** Fat interface command functions ***/
+// These functions throw an Error exception for this class
+// will always throw Error("Cannot load at a destination!");
+virtual void Ship::set_load_destination(Island *)
+{
+
+}
+
+// will always throw Error("Cannot unload at a destination!");
+virtual void Ship::set_unload_destination(Island *)
+{
+
+}
+
+// will always throw Error("Cannot attack!");
+virtual void Ship::attack(Ship *in_target_ptr)
+{
+
+}
+
+// will always throw Error("Cannot attack!");
+virtual void Ship::stop_attack()
+{
+
+}
+
+// interactions with other objects
+// receive a hit from an attacker
+virtual void Ship::receive_hit(int hit_force, Ship *attacker_ptr)
+{
+
+}
+
+double Ship::get_maximum_speed() const
+{
+
+}
+
+// return pointer to the Island currently docked at, or nullptr if not docked
+Island *Ship::get_docked_Island() const
+{
+
 }
 
 /* Private Function Definitions */
