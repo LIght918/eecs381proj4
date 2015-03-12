@@ -1,4 +1,4 @@
-#include "Ship.h"
+#include "Island.h"
 #include "Model.h"
 #include <iostream>
 #include <string>
@@ -8,13 +8,13 @@ using namespace std;
 Island::Island(const string &name_, Point position_, double fuel_ = 0., double production_rate_ = 0.) :
         Sim_object(name_), position(position_), fuel(fuel_), production_rate(production_rate_)
 {
-    cout << "Island " << get_name() << " constructed\n";
+    cout << "Island " << get_name() << " constructed" << endl;
 }
 
 // output destructor message
 ~Island::Island()
 {
-    cout << "Island " << get_name() << " destructed\n";
+    cout << "Island " << get_name() << " destructed" << endl;
 }
 
 // Return whichever is less, the request or the amount left,
@@ -23,7 +23,7 @@ double Island::provide_fuel(double request)
 {
     int min = request < fuel ? request : fuel;
     fuel -= min;
-    cout << "Island " << get_name() << " supplied " << min << " tons of fuel\n";
+    cout << "Island " << get_name() << " supplied " << min << " tons of fuel" << endl;
     return min;
 }
 
@@ -31,14 +31,14 @@ double Island::provide_fuel(double request)
 void Island::accept_fuel(double amount)
 {
     fuel += amount;
-    cout << "Island " << get_name() << " now has " << fuel << " tons\n";
+    cout << "Island " << get_name() << " now has " << fuel << " tons" << endl;
 }
 
 // if production_rate > 0, compute production_rate * unit time, and add to amount, and print an update message
 void Island::update() override
 {
     fuel += production_rate;
-    cout << "Island " << get_name() << " now has " << fuel << " tons\n";
+    cout << "Island " << get_name() << " now has " << fuel << " tons" << endl;
 }
 
 // output information about the current state

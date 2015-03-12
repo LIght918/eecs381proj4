@@ -1,5 +1,12 @@
+#ifndef TANKER_H
+#define TANKER_H
+
+#include "Ship.h"
+#include "Geometry.h"
+#include <string>
+
 /*
-A Tanker is a ship with a large corgo capacity for fuel.
+A Tanker is a ship with a large cargo capacity for fuel.
 It can be told an Island to load fuel at, and an Island to unload at.
 Once it is sent to the loading destination, it will start shuttling between 
 the loading and unloading destination. At the loading destination, 
@@ -11,34 +18,67 @@ fuel capacity and initial amount 100 tons, maximum speed 10., fuel consumption 2
 resistance 0, cargo capacity 1000 tons, initial cargo is 0 tons.
 */
 
-/* 
-This skeleton file shows the required public and protected interface for the class, which you may not modify. 
-If no protected members are shown, there must be none in your version. 
-If any protected or private members are shown here, then your class must also have them and use them as intended.
-You should delete this comment.
-*/
+enum class State_tanker {NO_CARGO_DEST, UNLOADING, LOADING, MOVING_TO_UNLOAD, MOVING_TO_LOAD};
 
+class Tanker : public Ship {
 public:
 	// initialize, the output constructor message
-	Tanker(const std::string& name_, Point position_);
+	Tanker(const std::string &name_, Point position_);
+
 	// output destructor message
 	~Tanker();
-	
+
 	// This class overrides these Ship functions so that it can check if this Tanker has assigned cargo destinations.
 	// if so, throw an Error("Tanker has cargo destinations!"); otherwise, simply call the Ship functions.
-    void set_destination_position_and_speed(Point destination, double speed) override;
+	void set_destination_position_and_speed(Point destination, double speed) override;
+
 	void set_course_and_speed(double course, double speed) override;
 
 	// Set the loading and unloading Island destinations
 	// if both cargo destination are already set, throw Error("Tanker has cargo destinations!").
 	// if they are the same, leave at the set values, and throw Error("Load and unload cargo destinations are the same!")
 	// if both destinations are now set, start the cargo cycle
-	void set_load_destination(Island*) override;
-	void set_unload_destination(Island*) override;
-	
+	void set_load_destination(Island *) override;
+
+	void set_unload_destination(Island *) override;
+
 	// when told to stop, clear the cargo destinations and stop
 	void stop() override;
-	
+
 	void update() override;
+
 	void describe() const override;
 
+private:
+	Island *load_dest;			// Loading destination
+	Island *unload_dest;		// Unloading destination
+
+	double cargo;				// Cargo currently being carried
+	double cargo_capacity;		// Maximum cargo that can be held
+
+	State_tanker tanker_state;	// Current state of this tanker
+
+	// Starts the tanker's cargo cycle
+	void start_cycle();
+
+	// Ends the tanker's cargo cycle
+	void end_cycle();
+
+	// Throws an error if the cargo destinations are the same
+	void check_cargo_dest_same()
+	{
+		if (load_dest == unload_dest)
+		{
+			throw Error("Load and unload cargo destinations are the same!");
+		}
+	}
+
+	// Throws an error if there are cargo destinations
+	void check_no_cargo_dest()
+	{
+		if (tanker_state != NO_CARGO_DEST)
+		{
+			throw Error("Tanker has cargo destinations!");
+		}
+	}
+};

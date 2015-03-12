@@ -1,6 +1,10 @@
 #ifndef SHIP_H
 #define SHIP_H
 
+#include "Sim_object.h"
+#include "Track_base.h"
+#include "Model.h"
+#include "Geometry.h"
 #include <string>
 
 /***** Ship Class *****/
@@ -19,7 +23,9 @@ The is a "fat interface" for the capabilities of derived types of Ships. These
 functions are implemented in this class to throw an Error exception.
 */
 
-enum class State {DOCKED, STOPPED, MOVING_TO_POSITION, MOVING_ON_COURSE, DEAD_IN_THE_WATER, SINKING, SUNK, ON_THE_BOTTOM};
+enum class State_ship {DOCKED, STOPPED, MOVING_TO_POSITION, MOVING_ON_COURSE, DEAD_IN_THE_WATER, SINKING, SUNK, ON_THE_BOTTOM};
+
+const int SHIP_DOCK_DISTANCE = .1;
 
 class Ship : public Sim_object, public Track_base {
 public:
@@ -40,24 +46,39 @@ public:
     // Return true if ship can move (it is not dead in the water or in the process or sinking);
     bool can_move() const
     {
-        return !ship_state == State::SINKING && !ship_state == State::SUNK && !ship_state == State::ON_THE_BOTTOM;
+        return is_afloat() && ship_state != State_ship::DEAD_IN_THE_WATER;
     }
 
     // Return true if ship is moving;
-    bool is_moving() const;
+    bool is_moving() const
+    {
+        return ship_state == State_ship::MOVING_ON_COURSE || ship_state == State_ship::MOVING_TO_POSITION;
+    }
 
     // Return true if ship is docked;
-    bool is_docked() const;
+    bool is_docked() const
+    {
+        return ship_state == State_ship::DOCKED;
+    }
 
     // Return true if ship is afloat (not in process of sinking), false if not
-    bool is_afloat() const;
+    bool is_afloat() const
+    {
+        return ship_state != State_ship::SINKING && ship_state != State_ship::SUNK && ship_state != State_ship::ON_THE_BOTTOM;
+    }
 
     // Return true if ship is on the bottom
-    bool is_on_the_bottom() const;
+    bool is_on_the_bottom() const
+    {
+        return ship_state == State_ship::ON_THE_BOTTOM;
+    }
 
     // Return true if the ship is Stopped and the distance to the supplied island
     // is less than or equal to 0.1 nm
-    bool can_dock(Island *island_ptr) const;
+    bool can_dock(Island *island_ptr) const
+    {
+        return ship_state == State_ship::STOPPED && cartesian_distance(get_location(), island_ptr->get_location()) < SHIP_DOCK_DISTANCE;
+    }
 
     /*** Interface to derived classes ***/
     // Update the state of the Ship
@@ -116,10 +137,16 @@ public:
 protected:
     // future projects may need additional protected members
 
-    double get_maximum_speed() const;
+    double get_maximum_speed() const
+    {
+        return max_speed;
+    }
 
     // return pointer to the Island currently docked at, or nullptr if not docked
-    Island *get_docked_Island() const;
+    Island *get_docked_Island() const
+    {
+        return docked_at;
+    }
 
 private:
     double fuel;                        // Current amount of fuel
@@ -130,9 +157,13 @@ private:
     double max_speed;                   // Maximum speed
     double resistance;                  // Resistance of ship
 
-    State ship_state;                   // Current state of the ship
+    State_ship ship_state;                   // Current state of the ship
+    Island *docked_at;                     // If docked, the island the ship is docked at
 
     // Updates position, fuel, and movement_state, assuming 1 time unit (1 hr)
     void calculate_movement();
+
+    // Check if the ship can move and the speed is within the max, and throws errors otherwise
+    void check_movement_and_speed(double speed);
 
 };

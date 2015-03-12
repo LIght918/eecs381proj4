@@ -10,10 +10,8 @@ struct Point;
 
 class Sim_object {
 public:
-    // *** define the constructor in Sim_object.cpp to output the supplied message
 	Sim_object(const std::string& name_);
 
-    // *** define the destructor in Sim_object.cpp to output the supplied message
     virtual ~Sim_object();
 	
 	const std::string& get_name() const
@@ -23,7 +21,6 @@ public:
     virtual void broadcast_current_state() {}
 
 	/* Interface for derived classes */
-	// *** declare the following as pure virtual functions 
 	Point get_location() const = 0;
 	void describe() const = 0;
 	void update() = 0;

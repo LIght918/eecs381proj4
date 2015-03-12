@@ -12,5 +12,6 @@ private:
 };
 
 /* add any of your own declarations here */
+const double REFUEL_MIN = .005;
 
 #endif

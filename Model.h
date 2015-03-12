@@ -1,3 +1,12 @@
+#ifndef MODEL_H
+#define MODEL_H
+
+#include <string>
+#include "Ship.h"
+#include "Island.h"
+#include "View.h"
+#include "Geometry.h"
+
 /*
 Model is part of a simplified Model-View-Controller pattern.
 Model keeps track of the Sim_objects in our little world. It is the only
@@ -10,13 +19,6 @@ Finally, it keeps the system's time.
 Controller tells Model what to do; Model in turn tells the objects what do, and
 when asked to do so by an object, tells all the Views whenever anything changes that might be relevant.
 Model also provides facilities for looking up objects given their name.
-*/
-
-/* 
-This skeleton file shows the required public and protected interface for the class, which you may not modify. 
-If no protected members are shown, there must be none in your version. 
-If any protected or private members are shown here, then your class must also have them and use them as intended.
-You should delete this comment.
 */
 
 // Declare the global model pointer
@@ -73,6 +75,8 @@ public:
 	void notify_gone(const std::string& name);
 
 	// disallow copy/move construction or assignment
+	Model(const Model&) = delete;
+	Model& operator=(const Model&) = delete;
 
 private:
 	int time;		// the simulated time
