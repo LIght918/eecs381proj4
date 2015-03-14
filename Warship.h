@@ -1,22 +1,20 @@
+#ifndef WARSHIP_H
+#define WARSHIP_H
+
+#include "Ship.h"
+#include "Geometry.h"
+#include "Navigation.h"
+#include <string>
+
 /* Warship class
 A Warship is a ship with firepower and range member variables, and some services for
 protected classes to manage many of the details of warship behavior. This is an
 abstract base class, so concrete classes derived from Warship must be declared.
 */
 
-/* 
-This skeleton file shows the required public and protected interface for the class, 
-which you may not modify.
-If no protected members are shown, there must be none in your version. 
-If any protected or private members are shown here, then your class 
-must also have them and use them as intended.
-You may define simple reader functions in the class declaration if you wish 
-by changing the prototype to the definition. Your .h file for a component will always
-be kept together with your .cpp file for the component.
-You should delete this comment.
-*/
+enum class State_warship {NOT_ATTACKING, ATTACKING};
 
-
+class Warship : public Ship {
 public:
 	// initialize, then output constructor message
 	Warship(const std::string& name_, Point position_, double fuel_capacity_, 
@@ -46,14 +44,34 @@ protected:
 	// future projects may need additional protected members
 
 	// return true if this Warship is in the attacking state
-	bool is_attacking() const;
+	bool is_attacking() const
+	{
+		return warship_state == State_warship::ATTACKING;
+	}
 	
 	// fire at the current target
 	void fire_at_target();
 		
 	// is the current target in range?
-	bool target_in_range() const;
+	bool target_in_range() const
+	{
+		if (target == nullptr) return false;
+		return cartesian_distance(get_location(), target->get_location()) < max_range;
+	}
 
 	// get the target
-	Ship* get_target() const;
+	Ship* get_target() const
+	{
+		return target;
+	}
 
+private:
+	double firepower;
+	double max_range;
+
+	State_warship warship_state;
+
+	Ship *target;
+};
+
+#endif

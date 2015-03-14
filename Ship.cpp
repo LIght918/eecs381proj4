@@ -21,9 +21,9 @@ Ship::Ship(const string &name_, Point position_, double fuel_capacity_,
 
 /*
 Define the destructor function even if it was declared as a pure virtual function.
-This seems odd, because pure virtual functions are usually not defined in the class
+This seems odd, because pure functions are usually not defined in the class
 that declares them. But this is often done as a way to make a class abstract,
-if there is no other virtual function that makes sense to mark as pure. Here we
+if there is no other function that makes sense to mark as pure. Here we
 are defining it just to get the destructor message output.
 */
 
@@ -122,7 +122,7 @@ void Ship::broadcast_current_state() override
 // Start moving to a destination position at a speed
 // may throw Error("Ship cannot move!")
 // may throw Error("Ship cannot go that fast!")
-virtual void Ship::set_destination_position_and_speed(Point destination_position, double speed)
+void Ship::set_destination_position_and_speed(Point destination_position, double speed)
 {
 	check_movement_and_speed(speed);
 	Compass_vector compass(get_location(), destination_position);
@@ -135,7 +135,7 @@ virtual void Ship::set_destination_position_and_speed(Point destination_position
 // Start moving on a course and speed
 // may throw Error("Ship cannot move!")
 // may throw Error("Ship cannot go that fast!");
-virtual void Ship::set_course_and_speed(double course, double speed)
+void Ship::set_course_and_speed(double course, double speed)
 {
 	check_movement_and_speed(speed);
 	set_course_and_speed(course, speed);
@@ -146,7 +146,7 @@ virtual void Ship::set_course_and_speed(double course, double speed)
 
 // Stop moving
 // may throw Error("Ship cannot move!");
-virtual void Ship::stop()
+void Ship::stop()
 {
 	if (!can_move())
 	{
@@ -160,7 +160,7 @@ virtual void Ship::stop()
 
 // dock at an Island - set our position = Island's position, go into Docked state
 // may throw Error("Can't dock!");
-virtual void Ship::dock(Island *island_ptr)
+void Ship::dock(Island *island_ptr)
 {
 	if (!can_dock(island_ptr))
 	{
@@ -175,7 +175,7 @@ virtual void Ship::dock(Island *island_ptr)
 
 // Refuel - must already be docked at an island; fill takes as much as possible
 // may throw Error("Must be docked!");
-virtual void Ship::refuel()
+void Ship::refuel()
 {
 	if (ship_state != DOCKED)
 	{
@@ -194,32 +194,32 @@ virtual void Ship::refuel()
 /*** Fat interface command functions ***/
 // These functions throw an Error exception for this class
 // will always throw Error("Cannot load at a destination!");
-virtual void Ship::set_load_destination(Island *)
+void Ship::set_load_destination(Island *)
 {
 	throw Error("Cannot load at a destination!");
 }
 
 // will always throw Error("Cannot unload at a destination!");
-virtual void Ship::set_unload_destination(Island *)
+void Ship::set_unload_destination(Island *)
 {
 	throw Error("Cannot unload at a destination!");
 }
 
 // will always throw Error("Cannot attack!");
-virtual void Ship::attack(Ship *in_target_ptr)
+void Ship::attack(Ship *in_target_ptr)
 {
 	throw Error(CANNOT_ATTACK_MSG);
 }
 
 // will always throw Error("Cannot attack!");
-virtual void Ship::stop_attack()
+void Ship::stop_attack()
 {
 	throw Error(CANNOT_ATTACK_MSG);
 }
 
 // interactions with other objects
 // receive a hit from an attacker
-virtual void Ship::receive_hit(int hit_force, Ship *attacker_ptr)
+void Ship::receive_hit(int hit_force, Ship *attacker_ptr)
 {
 	resistance -= hit_force;
 	cout << get_name() << " hit with " << hit_force << ", resistance now " << resistance << endl;

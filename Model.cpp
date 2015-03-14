@@ -1,14 +1,102 @@
+#include "Model.h"
+#include <string>
+#include <map>
+#include <vector>
+#include <functional>
+#include <algorithm>
+#include "Ship.h"
+#include "Island.h"
+#include "View.h"
+#include "Geometry.h"
+#include "Ship_factory.h"
 
-/* create some islands and ships using the following code in the Model constructor.
-Do not change the execution order of these code fragments. You should delete this comment. */
+using namespace std;
+using namespace placeholders;
 
-	new Island("Exxon", Point(10, 10), 1000, 200)
-	new Island("Shell", Point(0, 30), 1000, 200)
-	new Island("Bermuda", Point(20, 20))
-	
-	create_ship("Ajax", "Cruiser", Point (15, 15))
-	create_ship("Xerxes", "Cruiser", Point (25, 25))
-	create_ship("Valdez", "Tanker", Point (30, 30))
+// create the initial objects, output constructor message
+Model::Model()
+{
+    add_island(new Island("Exxon", Point(10, 10), 1000, 200));
+    add_island(new Island("Shell", Point(0, 30), 1000, 200));
+    add_island(new Island("Bermuda", Point(20, 20)));
 
-	cout << "Model constructed" << endl;
+    add_ship(create_ship("Ajax", "Cruiser", Point (15, 15)));
+    add_ship(create_ship("Xerxes", "Cruiser", Point (25, 25)));
+    add_ship(create_ship("Valdez", "Tanker", Point (30, 30)));
 
+    cout << "Model constructed" << endl;
+}
+
+// destroy all objects, output destructor message
+Model::~Model()
+{
+    for_each(objects.begin(), objects.end(), [](Sim_object *object) {delete object;});
+    cout << "Model destructed" << endl;
+}
+
+// will throw Error("Island not found!") if no island of that name
+Island* Model::get_island_ptr(const std::string& name) const
+{
+    string shortened_name = shorten_string(name);
+    if (!is_island_present(shortened_name)) throw Error("Island not found!");
+    return islands[shortened_name];
+}
+
+// add a new ship to the list, and update the view
+void Model::add_ship(Ship* ship)
+{
+    ships[shorten_string(ship->get_name())] = ship;
+}
+// will throw Error("Ship not found!") if no ship of that name
+Ship* Model::get_ship_ptr(const std::string& name) const
+{
+    string shortened_name = shorten_string(name);
+    if (!is_ship_present(shortened_name)) throw Error("Ship not found!");
+    return ships[shortened_name];
+}
+
+// tell all objects to describe themselves
+void Model::describe() const
+{
+    for_each(objects.begin(), objects.end(), mem_fn(&Sim_object::describe()));
+}
+// increment the time, and tell all objects to update themselves
+void Model::update()
+{
+    ++time;
+    for_each(objects.begin(), objects.end(), mem_fn(&Sim_object::update()));
+    vector<Ship*> dead_ships;
+    remove_copy(ships.begin(), ships.end(), dead_ships.begin(), [](Ship *ship){return !ship->is_on_the_bottom();});
+    for (auto&& dead_ship : dead_ships)
+    {
+        objects.erase(dead_ship->get_name());
+        ships.erase(dead_ship->get_name());
+        delete dead_ship;
+    }
+}
+
+/* View services */
+// Attaching a View adds it to the container and causes it to be updated
+// with all current objects' locations (or other state information).
+void Model::attach(View* view)
+{
+    views.push_back(view);
+    for_each(objects.begin(), objects.end(), [view](Sim_object *object){view->update_location(object->get_name(), object->get_location());});
+}
+// Detach the View by discarding the supplied pointer from the container of Views
+// - no updates sent to it thereafter.
+void Model::detach(View* view)
+{
+    views.erase(find(views.begin(), views.end(), view));
+}
+
+// notify the views about an object's location
+void Model::notify_location(const std::string& name, Point location)
+{
+    for_each(views.begin(), views.end(), bind(&View::update_location, _1, name, location));
+}
+// notify the views that an object is now gone
+void Model::notify_gone(const std::string& name)
+{
+    for_each(views.begin(), views.end(), bind(&View::update_remove, _1, name));
+}

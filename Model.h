@@ -2,10 +2,14 @@
 #define MODEL_H
 
 #include <string>
-#include "Ship.h"
-#include "Island.h"
-#include "View.h"
-#include "Geometry.h"
+#include <map>
+#include <vector>
+#include "Utility.h"
+
+class Ship;
+class Island;
+class View;
+struct Point;
 
 /*
 Model is part of a simplified Model-View-Controller pattern.
@@ -38,15 +42,24 @@ public:
 
 	// is name already in use for either ship or island?
     // either the identical name, or identical in first two characters counts as in-use
-	bool is_name_in_use(const std::string& name) const;
+	bool is_name_in_use(const std::string& name) const
+    {
+        return objects.find(shorten_string(name)) != nullptr;
+    }
 
 	// is there such an island?
-	bool is_island_present(const std::string& name) const;
+	bool is_island_present(const std::string& name) const
+    {
+        return islands.find(shorten_string(name)) != nullptr;
+    }
 	// will throw Error("Island not found!") if no island of that name
 	Island* get_island_ptr(const std::string& name) const;
 
 	// is there such an ship?
-	bool is_ship_present(const std::string& name) const;
+	bool is_ship_present(const std::string& name) const
+    {
+        return ships.find(shorten_string(name)) != nullptr;
+    }
 	// add a new ship to the list, and update the view
 	void add_ship(Ship*);
 	// will throw Error("Ship not found!") if no ship of that name
@@ -55,15 +68,11 @@ public:
 	// tell all objects to describe themselves
 	void describe() const;
 	// increment the time, and tell all objects to update themselves
-	void update();	
-	
-    /* Note: In Project 4 there is only one View. There will be multiple View objects
-    later. So implement the View services so that multiple Views are possible by
-    using a container of View pointers.  You should delete this comment. */
+	void update();
     
 	/* View services */
 	// Attaching a View adds it to the container and causes it to be updated
-    // with all current objects'location (or other state information.
+    // with all current objects' locations (or other state information).
 	void attach(View*);
 	// Detach the View by discarding the supplied pointer from the container of Views
     // - no updates sent to it thereafter.
@@ -81,6 +90,10 @@ public:
 private:
 	int time;		// the simulated time
 
+    std::map<std::string, Island*> islands;
+	std::map<std::string, Ship*> ships;
+	std::map<std::string, Sim_object*> objects;
 
+    vector<View*> views;
 };
 

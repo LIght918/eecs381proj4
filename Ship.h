@@ -77,7 +77,7 @@ public:
     // is less than or equal to 0.1 nm
     bool can_dock(Island *island_ptr) const
     {
-        return ship_state == State_ship::STOPPED && cartesian_distance(get_location(), island_ptr->get_location()) < SHIP_DOCK_DISTANCE;
+        return ship_state == State_ship::STOPPED && cartesian_distance(get_location(), island_ptr->get_location()) <= SHIP_DOCK_DISTANCE;
     }
 
     /*** Interface to derived classes ***/

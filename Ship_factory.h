@@ -2,9 +2,10 @@
 #define SHIP_FACTORY_H
 
 #include <string>
-struct Point;
 
+struct Point;
 class Ship;
+
 /* This is a very simple form of factory, a function; you supply the information, it creates
 the specified kind of object and returns a pointer to it. The Ship is allocated
 with new, so some other component is responsible for deleting it.
