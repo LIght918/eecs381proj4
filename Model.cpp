@@ -14,6 +14,8 @@
 using namespace std;
 using namespace placeholders;
 
+Model* g_Model_ptr;
+
 // create the initial objects, output constructor message
 Model::Model()
 {
