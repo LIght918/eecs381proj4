@@ -7,7 +7,6 @@
 #include <iostream>
 
 using namespace std;
-using namespace State_tanker;
 
 const double TANKER_INIT_FUEL = 100;
 const double TANKER_MAX_SPEED = 10;
@@ -20,7 +19,7 @@ const double TANKER_CARGO_CAPACITY = 1000;
 Tanker::Tanker(const std::string &name_, Point position_) :
         Ship(name_, position_, TANKER_INIT_FUEL, TANKER_MAX_SPEED, TANKER_FUEL_CONSUMPTION, TANKER_INIT_RESISTANCE),
         cargo(TANKER_INIT_CARGO), cargo_capacity(TANKER_CARGO_CAPACITY),
-        load_dest(nullptr), unload_dest(nullptr), tanker_state(NO_CARGO_DEST)
+        load_dest(nullptr), unload_dest(nullptr), tanker_state(State_tanker::NO_CARGO_DEST)
 {
     cout << "Tanker " << get_name() << " constructed" << endl;
 }
@@ -79,20 +78,20 @@ void Tanker::update() override
     Ship::update();
     if (!can_move())
     {
-        if (tanker_state != NO_CARGO_DEST) stop_cycle();
+        if (tanker_state != State_tanker::NO_CARGO_DEST) stop_cycle();
         return;
     }
     switch(tanker_state)
     {
-        case NO_CARGO_DEST:
+        case State_tanker::NO_CARGO_DEST:
             return;
-        case MOVING_TO_LOAD:
-        case MOVING_TO_UNLOAD:
+        case State_tanker::MOVING_TO_LOAD:
+        case State_tanker::MOVING_TO_UNLOAD:
             if (!is_moving())
             {
-                bool moving_to_load = tanker_state == MOVING_TO_LOAD;
+                bool moving_to_load = tanker_state == State_tanker::MOVING_TO_LOAD;
                 dock(moving_to_load ? load_dest : unload_dest);
-                tanker_state = moving_to_load ? LOADING : UNLOADING;
+                tanker_state = moving_to_load ? State_tanker::LOADING : State_tanker::UNLOADING;
             }
             return;
         case LOADING:
@@ -102,7 +101,7 @@ void Tanker::update() override
             {
                 cargo = cargo_capacity;
                 Ship::set_destination_position_and_speed(unload_dest, get_maximum_speed());
-                tanker_state = MOVING_TO_UNLOAD;
+                tanker_state = State_tanker::MOVING_TO_UNLOAD;
                 return;
             }
             cargo += load_dest->provide_fuel(cargo_needed);
@@ -112,7 +111,7 @@ void Tanker::update() override
             if (cargo == 0)
             {
                 Ship::set_destination_position_and_speed(load_dest, get_maximum_speed());
-                tanker_state = MOVING_TO_LOAD;
+                tanker_state = State_tanker::MOVING_TO_LOAD;
                 return;
             }
             unload_dest->provide_fuel(cargo);
@@ -128,19 +127,19 @@ void Tanker::describe() const override
     cout << "Cargo: " << cargo << " tons";
     switch(tanker_state)
     {
-        case NO_CARGO_DEST:
+        case State_tanker::NO_CARGO_DEST:
             cout << ", no cargo destinations" << endl;
             return;
-        case LOADING:
+        case State_tanker::LOADING:
             cout << ", loading" << endl;
             return;
-        case UNLOADING:
+        case State_tanker::UNLOADING:
             cout << ", unloading" << endl;
             return;
-        case MOVING_TO_LOAD:
+        case State_tanker::MOVING_TO_LOAD:
             cout << ", moving to loading destination" << endl;
             return;
-        case MOVING_TO_UNLOAD:
+        case State_tanker::MOVING_TO_UNLOAD:
             cout << ", moving to unloading destination" << endl;
             return;
     }
@@ -151,8 +150,8 @@ void Tanker::start_cycle()
 {
     if (is_docked())
     {
-        if (get_docked_Island() == load_dest) tanker_state = LOADING;
-        if (get_docked_Island() == unload_dest) tanker_state = UNLOADING;
+        if (get_docked_Island() == load_dest) tanker_state = State_tanker::LOADING;
+        if (get_docked_Island() == unload_dest) tanker_state = State_tanker::UNLOADING;
         return;
     }
     if (!is_moving())
@@ -160,7 +159,7 @@ void Tanker::start_cycle()
         if (cargo == 0 && can_dock(load_dest))
         {
             dock(load_dest);
-            tanker_state = LOADING;
+            tanker_state = State_tanker::LOADING;
             return;
         }
         if (cargo > 0 && can_dock(unload_dest))
@@ -173,13 +172,13 @@ void Tanker::start_cycle()
     if (cargo == 0)
     {
         Ship::set_destination_position_and_speed(load_dest->get_location(), get_maximum_speed());
-        tanker_state = MOVING_TO_LOAD;
+        tanker_state = State_tanker::MOVING_TO_LOAD;
         return;
     }
     if (cargo > 0)
     {
         Ship::set_destination_position_and_speed(unload_dest->get_location(), get_maximum_speed());
-        tanker_state = MOVING_TO_UNLOAD;
+        tanker_state = State_tanker::MOVING_TO_UNLOAD;
         return;
     }
 }

@@ -8,14 +8,13 @@
 #include <iostream>
 
 using namespace std;
-using namespace State_ship;
 
 const string CANNOT_ATTACK_MSG = "Cannot attack!";
 
 Ship::Ship(const string &name_, Point position_, double fuel_capacity_,
         double maximum_speed_, double fuel_consumption_, int resistance_) :
         Sim_object(name_), fuel_consumption(fuel_consumption_), resistance(resistance_), max_speed(maximum_speed_),
-        Track_base(position_, Course_speed(0, 0)), ship_state(STOPPED), docked_at(nullptr)
+        Track_base(position_, Course_speed(0, 0)), ship_state(State_ship::STOPPED), docked_at(nullptr)
 {
     cout << "Ship " << get_name() << " constructed" << endl;
 }
@@ -48,7 +47,7 @@ void Ship::update() override
 {
 	if (is_afloat() && resistance < 0)
 	{
-		ship_state = SINKING;
+		ship_state = State_ship::SINKING;
 		docked_at = nullptr;
 		set_speed(0);
 		cout << get_name() << " sinking" << endl;
@@ -56,29 +55,29 @@ void Ship::update() override
 	}
 	switch(ship_state)
 	{
-		case SINKING:
+		case State_ship::SINKING:
 			ship_state = SUNK;
 			g_Model_ptr->notify_gone(get_name());
 			cout << get_name() << " sunk" << endl;
 			break;
-		case SUNK:
-			ship_state = ON_THE_BOTTOM;
-		case ON_THE_BOTTOM:
+		case State_ship::SUNK:
+			ship_state = State_ship::ON_THE_BOTTOM;
+		case State_ship::ON_THE_BOTTOM:
 			cout << get_name() << " on the bottom" << endl;
 			break;
-		case MOVING_ON_COURSE:
-		case MOVING_TO_POSITION:
+		case State_ship::MOVING_ON_COURSE:
+		case State_ship::MOVING_TO_POSITION:
 			calculate_movement();
 			g_Model_ptr->notify_location(get_name(), get_location());
 			cout << get_name() << " now at " << get_location() << endl;
 			break;
-		case STOPPED:
+		case State_ship::STOPPED:
 			cout << get_name() << " stopped at " << get_location() << endl;
 			break;
-		case DOCKED:
+		case State_ship::DOCKED:
 			cout << get_name() << " docked at " << get_docked_Island() << endl;
 			break;
-		case DEAD_IN_THE_WATER:
+		case State_ship::DEAD_IN_THE_WATER:
 			cout << get_name() << " dead in the water at " << get_location() << endl;
 			break;
 	}
@@ -90,13 +89,13 @@ void Ship::describe() const override
 	cout << get_name() << " at " << get_location();
 	switch(ship_state)
 	{
-		case SINKING:
+		case State_ship::SINKING:
 			cout << " sinking" << endl;
 			return;
-		case SUNK:
+		case State_ship::SUNK:
 			cout << " sunk" << endl;
 			return;
-		case ON_THE_BOTTOM:
+		case State_ship::ON_THE_BOTTOM:
 			cout << " on the bottom" << endl;
 			return;
 		default:
@@ -105,19 +104,19 @@ void Ship::describe() const override
 	}
 	switch(ship_state)
 	{
-		case MOVING_TO_POSITION:
+		case State_ship::MOVING_TO_POSITION:
 			cout << "Moving to " << destination << " on " << get_course() << endl;
 			break;
-		case MOVING_ON_COURSE:
+		case State_ship::MOVING_ON_COURSE:
 			cout << "Moving on " << get_course() << endl;
 			break;
-		case DOCKED:
+		case State_ship::DOCKED:
 			cout << "Docked at " << get_docked_Island() << endl;
 			break;
-		case STOPPED:
+		case State_ship::STOPPED:
 			cout << "Stopped" << endl;
 			break;
-		case DEAD_IN_THE_WATER:
+		case State_ship::DEAD_IN_THE_WATER:
 			cout << "Dead in the water" << endl;
 			break;
 	}
@@ -137,7 +136,7 @@ void Ship::set_destination_position_and_speed(Point destination_position, double
 	check_movement_and_speed(speed);
 	Compass_vector compass(get_location(), destination_position);
 	set_course_and_speed(compass.direction, speed);
-	ship_state = MOVING_TO_POSITION;
+	ship_state = State_ship::MOVING_TO_POSITION;
 	docked_at = nullptr;
 	cout << get_name() << " will sail on " << get_course() << " to " << destination_position << endl;
 }
@@ -149,7 +148,7 @@ void Ship::set_course_and_speed(double course, double speed)
 {
 	check_movement_and_speed(speed);
 	set_course_and_speed(course, speed);
-	ship_state = MOVING_ON_COURSE;
+	ship_state = State_ship::MOVING_ON_COURSE;
 	docked_at = nullptr;
 	cout << get_name() << " will sail on " << get_course() << endl;
 }
@@ -163,7 +162,7 @@ void Ship::stop()
 		throw Error("Ship cannot move!");
 	}
 	set_speed(0);
-	ship_state = STOPPED;
+	ship_state = State_ship::STOPPED;
 	docked_at = nullptr;
 	cout << get_name() << " stopping at " << get_location() << endl;
 }
@@ -178,7 +177,7 @@ void Ship::dock(Island *island_ptr)
 	}
 	set_position(island_ptr->get_location());
 	docked_at = island_ptr;
-	ship_state = DOCKED;
+	ship_state = State_ship::DOCKED;
 	g_Model_ptr->notify_location(get_name(), get_location());
 	cout << get_name() << " docked at " << island_ptr->get_name();
 }
@@ -187,7 +186,7 @@ void Ship::dock(Island *island_ptr)
 // may throw Error("Must be docked!");
 void Ship::refuel()
 {
-	if (ship_state != DOCKED)
+	if (ship_state != State_ship::DOCKED)
 	{
 		throw Error("Must be docked!");
 	}
@@ -277,7 +276,7 @@ void Ship:: calculate_movement()
 	}
 	
 	// are we are moving to a destination, and is the destination within the distance possible?
-	if(ship_state == MOVING_TO_POSITION && destination_distance <= distance_possible)
+	if(ship_state == State_ship::MOVING_TO_POSITION && destination_distance <= distance_possible)
 	{
 		// yes, make our new position the destination
 		set_position(destination);
@@ -285,7 +284,7 @@ void Ship:: calculate_movement()
 		double fuel_required = destination_distance * fuel_consumption;
 		fuel -= fuel_required;
 		set_speed(0.);
-		ship_state = STOPPED;
+		ship_state = State_ship::STOPPED;
 	}
 	else
 	{
@@ -297,7 +296,7 @@ void Ship:: calculate_movement()
 		{
 			fuel = 0.0;
             set_speed(0.);
-			ship_state = DEAD_IN_THE_WATER;
+			ship_state = State_ship::DEAD_IN_THE_WATER;
 		}
 		else
 		{

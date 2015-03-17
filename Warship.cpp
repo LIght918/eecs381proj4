@@ -4,14 +4,13 @@
 #include <iostream>
 
 using namespace std;
-using namespace State_warship;
 
 // initialize, then output constructor message
 Warship::Warship(const string& name_, Point position_, double fuel_capacity_,
         double maximum_speed_, double fuel_consumption_, int resistance_,
         int firepower_, double maximum_range_) :
         Ship(name_, position_, fuel_capacity_, maximum_speed_, fuel_consumption_, resistance_),
-        firepower(firepower_), max_range(maximum_range_), warship_state(NOT_ATTACKING), target(nullptr)
+        firepower(firepower_), max_range(maximum_range_), warship_state(State_warship::NOT_ATTACKING), target(nullptr)
 {
     cout << "Warship " << get_name() << " constructed" << endl;
 }
@@ -27,7 +26,7 @@ Warship::~Warship()
 void Warship::update() override
 {
     Ship::update();
-    if (warship_state == ATTACKING)
+    if (warship_state == State_warship::ATTACKING)
     {
         if (!is_afloat() || !target->is_afloat())
         {
@@ -49,22 +48,22 @@ void Warship::attack(Ship* target_ptr_) override
     if (target_ptr_ == this) throw Error("Warship may not attack itself!");
     if (target_ptr_ == target) throw Error("Already attacking this target!");
     target = target_ptr_;
-    warship_state = ATTACKING;
+    warship_state = State_warship::ATTACKING;
     cout << get_name() << " will attack " << target->get_name() << endl;
 }
 
 // will throw Error("Was not attacking!") if not Attacking
 void Warship::stop_attack() override
 {
-    if (warship_state != ATTACKING) throw Error("Was not attacking!");
-    warship_state = NOT_ATTACKING;
+    if (warship_state != State_warship::ATTACKING) throw Error("Was not attacking!");
+    warship_state = State_warship::NOT_ATTACKING;
     target = nullptr;
 }
 
 void Warship::describe() const override
 {
     Ship::describe();
-    if (warship_state == ATTACKING)
+    if (warship_state == State_warship::ATTACKING)
     {
         cout << "Attacking " << target->get_name() << endl;
     }
