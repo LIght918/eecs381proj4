@@ -42,8 +42,7 @@ void Controller::run()
             if (command_func_map.find(command) != command_func_map.end())
             {
                 // if so, run function and return if it returns true
-                auto func = command_func_map[command];
-                if ((this->*func)(view)) return;
+                if ((this->*command_func_map[command])(view)) return;
             }
             else
             {
@@ -59,8 +58,7 @@ void Controller::run()
                 if (ship_func_map.find(ship_command) != ship_func_map.end())
                 {
                     // if so, run the function
-                    auto func = ship_func_map[ship_command];
-                    (this->*func)(ship);
+                    (this->*ship_func_map[ship_command])(ship);
                 }
                 else
                 {
@@ -181,7 +179,7 @@ void Controller::ship_course(Ship *ship)
 }
 void Controller::ship_position(Ship *ship)
 {
-    ship->set_destination_position_and_speed(Point(read_double(), read_double()), read_speed);
+    ship->set_destination_position_and_speed(Point(read_double(), read_double()), read_speed());
 }
 void Controller::ship_destination(Ship *ship)
 {
