@@ -161,7 +161,7 @@ bool Controller::model_create(View *view)
 {
     string new_name;
     cin >> new_name;
-    check_string_length(new_name);
+    if (new_name.size() < SHORTEN_NAME_LENGTH) throw Error("Name is too short!");
     if (g_Model_ptr->is_name_in_use(new_name)) throw Error("Name is already in use!");
     string new_type;
     cin >> new_type;

@@ -37,7 +37,7 @@ Model::~Model()
 // will throw Error("Island not found!") if no island of that name
 Island* Model::get_island_ptr(const std::string& name) const
 {
-    string shortened_name = shorten_string(name);
+    string shortened_name = name.substr(0, SHORTEN_NAME_LENGTH);
     if (!is_island_present(shortened_name)) throw Error("Island not found!");
     return islands[shortened_name];
 }
@@ -45,12 +45,12 @@ Island* Model::get_island_ptr(const std::string& name) const
 // add a new ship to the list, and update the view
 void Model::add_ship(Ship* ship)
 {
-    ships[shorten_string(ship->get_name())] = ship;
+    ships[ship->get_name().substr(0, SHORTEN_NAME_LENGTH)] = ship;
 }
 // will throw Error("Ship not found!") if no ship of that name
 Ship* Model::get_ship_ptr(const std::string& name) const
 {
-    string shortened_name = shorten_string(name);
+    string shortened_name = name.substr(0, SHORTEN_NAME_LENGTH);
     if (!is_ship_present(shortened_name)) throw Error("Ship not found!");
     return ships[shortened_name];
 }
