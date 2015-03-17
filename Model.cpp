@@ -50,7 +50,7 @@ Island* Model::get_island_ptr(const std::string& name) const
 {
     string shortened_name = name.substr(0, SHORTEN_NAME_LENGTH);
     if (!is_island_present(shortened_name)) throw Error("Island not found!");
-    return islands[shortened_name];
+    return (*islands.find(shortened_name)).second;
 }
 
 // add a new ship to the list, and update the view
@@ -66,7 +66,7 @@ Ship* Model::get_ship_ptr(const std::string& name) const
 {
     string shortened_name = name.substr(0, SHORTEN_NAME_LENGTH);
     if (!is_ship_present(shortened_name)) throw Error("Ship not found!");
-    return ships[shortened_name];
+    return (*ships.find(shortened_name)).second;
 }
 
 // tell all objects to describe themselves
