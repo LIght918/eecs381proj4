@@ -1,6 +1,7 @@
 #ifndef ISLAND_H
 #define ISLAND_H
 #include "Sim_object.h"
+#include "Geometry.h"
 #include <string>
 
 /***** Island Class *****/

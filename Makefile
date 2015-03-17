@@ -24,7 +24,7 @@ Cruiser.o: Cruiser.h Cruiser.cpp Warship.h Ship.h Geometry.h
 Geometry.o: Geometry.h Geometry.cpp
 	$(CC) $(CFLAGS) Geometry.cpp
 
-Island.o: Island.h Island.cpp Model.h
+Island.o: Island.h Island.cpp Model.h Geometry.h
 	$(CC) $(CFLAGS) Island.cpp
 
 Model.o: Model.h Model.cpp Ship.h Island.h View.h Geometry.h Ship_factory.h
