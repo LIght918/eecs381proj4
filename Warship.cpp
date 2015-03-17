@@ -23,7 +23,7 @@ Warship::~Warship()
 }
 
 // perform warship-specific behavior
-void Warship::update() override
+void Warship::update()
 {
     Ship::update();
     if (warship_state == State_warship::ATTACKING)
@@ -42,7 +42,7 @@ void Warship::update() override
 // will	throw Error("Cannot attack!") if not Afloat
 // will throw Error("Warship may not attack itself!")
 // if supplied target is the same as this Warship
-void Warship::attack(Ship* target_ptr_) override
+void Warship::attack(Ship* target_ptr_)
 {
     if (!is_afloat()) throw Error("Cannot attack!");
     if (target_ptr_ == this) throw Error("Warship may not attack itself!");
@@ -53,14 +53,14 @@ void Warship::attack(Ship* target_ptr_) override
 }
 
 // will throw Error("Was not attacking!") if not Attacking
-void Warship::stop_attack() override
+void Warship::stop_attack()
 {
     if (warship_state != State_warship::ATTACKING) throw Error("Was not attacking!");
     warship_state = State_warship::NOT_ATTACKING;
     target = nullptr;
 }
 
-void Warship::describe() const override
+void Warship::describe() const
 {
     Ship::describe();
     if (warship_state == State_warship::ATTACKING)

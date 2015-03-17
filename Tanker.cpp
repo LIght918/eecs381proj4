@@ -32,13 +32,13 @@ Tanker::~Tanker()
 
 // This class overrides these Ship functions so that it can check if this Tanker has assigned cargo destinations.
 // if so, throw an Error("Tanker has cargo destinations!"); otherwise, simply call the Ship functions.
-void Tanker::set_destination_position_and_speed(Point destination, double speed) override
+void Tanker::set_destination_position_and_speed(Point destination, double speed)
 {
     check_no_cargo_dest();
     Ship::set_destination_position_and_speed(destination, speed);
 }
 
-void Tanker::set_course_and_speed(double course, double speed) override
+void Tanker::set_course_and_speed(double course, double speed)
 {
     check_no_cargo_dest();
     Ship::set_course_and_speed(course, speed);
@@ -48,7 +48,7 @@ void Tanker::set_course_and_speed(double course, double speed) override
 // if both cargo destination are already set, throw Error("Tanker has cargo destinations!").
 // if they are the same, leave at the set values, and throw Error("Load and unload cargo destinations are the same!")
 // if both destinations are now set, start the cargo cycle
-void Tanker::set_load_destination(Island *dest) override
+void Tanker::set_load_destination(Island *dest)
 {
     check_no_cargo_dest();
     load_dest = dest;
@@ -57,7 +57,7 @@ void Tanker::set_load_destination(Island *dest) override
     start_cycle();
 }
 
-void Tanker::set_unload_destination(Island *dest) override
+void Tanker::set_unload_destination(Island *dest)
 {
     check_no_cargo_dest();
     unload_dest = dest;
@@ -67,13 +67,13 @@ void Tanker::set_unload_destination(Island *dest) override
 }
 
 // when told to stop, clear the cargo destinations and stop
-void Tanker::stop() override
+void Tanker::stop()
 {
     Ship::stop();
     stop_cycle();
 }
 
-void Tanker::update() override
+void Tanker::update()
 {
     Ship::update();
     if (!can_move())
@@ -120,7 +120,7 @@ void Tanker::update() override
     }
 }
 
-void Tanker::describe() const override
+void Tanker::describe() const
 {
     cout << "\nTanker ";
     Ship::describe();
