@@ -76,7 +76,7 @@ private:
 	// Throws an error if there are cargo destinations
 	void check_no_cargo_dest()
 	{
-		if (tanker_state != NO_CARGO_DEST)
+		if (tanker_state != State_tanker::NO_CARGO_DEST)
 		{
 			throw Error("Tanker has cargo destinations!");
 		}
