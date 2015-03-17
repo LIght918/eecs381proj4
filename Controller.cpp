@@ -80,31 +80,31 @@ void Controller::run()
 }
 
 // helper functions
-int read_int()
+int Controller::read_int()
 {
     int new_int;
     if (!(cin >> new_int)) throw Error("Expected an integer!");
     return new_int;
 }
-double read_double()
+double Controller::read_double()
 {
     int new_double;
     if (!(cin >> new_double)) throw Error("Expected a double!");
     return new_double;
 }
-double read_speed()
+double Controller::read_speed()
 {
     double speed = read_double();
     if (speed < 0) throw Error("Negative speed entered!");
     return speed;
 }
-Ship* read_ship()
+Ship* Controller::read_ship()
 {
     string name;
     cin >> name;
     return g_Model_ptr->get_ship_ptr(name);
 }
-Island* read_island()
+Island* Controller::read_island()
 {
     string name;
     cin >> name;
