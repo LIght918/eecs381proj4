@@ -95,7 +95,7 @@ void Tanker::update()
                 tanker_state = moving_to_load ? State_tanker::LOADING : State_tanker::UNLOADING;
             }
             return;
-        case LOADING:
+        case State_tanker::LOADING:
             refuel();
             double cargo_needed = cargo_capacity - cargo;
             if (cargo_needed < REFUEL_MIN)
@@ -108,7 +108,7 @@ void Tanker::update()
             cargo += load_dest->provide_fuel(cargo_needed);
             cout << get_name() << " now has " << cargo << " of cargo" << endl;
             return;
-        case UNLOADING:
+        case State_tanker::UNLOADING:
             if (cargo == 0)
             {
                 Ship::set_destination_position_and_speed(load_dest, get_maximum_speed());
