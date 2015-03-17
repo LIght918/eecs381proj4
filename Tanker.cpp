@@ -101,7 +101,7 @@ void Tanker::update()
             if (cargo_needed < REFUEL_MIN)
             {
                 cargo = cargo_capacity;
-                Ship::set_destination_position_and_speed(unload_dest, get_maximum_speed());
+                Ship::set_destination_position_and_speed(unload_dest->get_location(), get_maximum_speed());
                 tanker_state = State_tanker::MOVING_TO_UNLOAD;
                 return;
             }
@@ -111,7 +111,7 @@ void Tanker::update()
         case State_tanker::UNLOADING:
             if (cargo == 0)
             {
-                Ship::set_destination_position_and_speed(load_dest, get_maximum_speed());
+                Ship::set_destination_position_and_speed(load_dest->get_location(), get_maximum_speed());
                 tanker_state = State_tanker::MOVING_TO_LOAD;
                 return;
             }
