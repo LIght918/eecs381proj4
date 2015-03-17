@@ -60,30 +60,30 @@ private:
 
 	// function maps
 	static std::map<std::string, command_func> command_func_map {
-			{"quit", &quit},
+			{"quit", &Controller::quit},
 
-			{"default", &view_default},
-			{"size", &view_size},
-			{"zoom", &view_zoom},
-			{"pan", &view_pan},
-			{"show", &view_show},
+			{"default", &Controller::view_default},
+			{"size", &Controller::view_size},
+			{"zoom", &Controller::view_zoom},
+			{"pan", &Controller::view_pan},
+			{"show", &Controller::view_show},
 
-			{"status", &model_status},
-			{"go", &model_go},
-			{"create", &model_create}
+			{"status", &Controller::model_status},
+			{"go", &Controller::model_go},
+			{"create", &Controller::model_create}
 	};
 
 	static std::map<std::string, ship_func> ship_func_map {
-			{"course", &ship_course},
-			{"position", &ship_position},
-			{"destination", &ship_destination},
-			{"load_at", &ship_load_at},
-			{"unload_at", &ship_unload_at},
-			{"dock_at", &ship_dock_at},
-			{"attack", &ship_attack},
-			{"refuel", &ship_refuel},
-			{"stop", &ship_stop},
-			{"stop_attack", &ship_stop_attack}
+			{"course", &Controller::ship_course},
+			{"position", &Controller::ship_position},
+			{"destination", &Controller::ship_destination},
+			{"load_at", &Controller::ship_load_at},
+			{"unload_at", &Controller::ship_unload_at},
+			{"dock_at", &Controller::ship_dock_at},
+			{"attack", &Controller::ship_attack},
+			{"refuel", &Controller::ship_refuel},
+			{"stop", &Controller::ship_stop},
+			{"stop_attack", &Controller::ship_stop_attack}
 	};
 };
 
