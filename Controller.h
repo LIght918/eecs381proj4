@@ -1,6 +1,8 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
+#include <map>
+
 class Model;
 class View;
 class Ship;

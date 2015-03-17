@@ -3,8 +3,7 @@
 
 #include <string>
 #include <map>
-
-struct Point;
+#include "Geometry.h"
 
 /* *** View class ***
 The View class encapsulates the data and functions needed to generate the map

@@ -167,3 +167,5 @@ private:
     void check_movement_and_speed(double speed);
 
 };
+
+#endif
