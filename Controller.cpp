@@ -39,25 +39,26 @@ void Controller::run()
             string command;
             cin >> command;
             // first, check the command func map if this a command word
-            if (COMMAND_FUNC_MAP.find(command) != COMMAND_FUNC_MAP.end())
+            if (command_func_map.find(command) != command_func_map.end())
             {
                 // if so, run function and return if it returns true
-                if (COMMAND_FUNC_MAP[command](view)) return;
+                if (command_func_map[command]->*(view)) return;
             }
             else
             {
                 // if not, find the ship with this name
-                try { Ship *ship = g_Model_ptr->get_ship_ptr(command); }
+                Ship *ship;
+                try { ship = g_Model_ptr->get_ship_ptr(command); }
                 catch (Error& e) { throw Error(UNRECOGNIZED_ERROR_MSG); }
-                // if there is no ship with that name, an unrecognized comman error will be thrown
+                // if there is no ship with that name, an unrecognized command error will be thrown
                 // read in the ship command
                 string ship_command;
                 cin >> ship_command;
                 // check the ship func map if this is a command word
-                if (SHIP_FUNC_MAP.find(ship_command) != SHIP_FUNC_MAP.end())
+                if (ship_func_map.find(ship_command) != ship_func_map.end())
                 {
                     // if so, run the function
-                    SHIP_FUNC_MAP[ship_command](ship);
+                    ship_func_map[ship_command]->*(ship);
                 }
                 else
                 {

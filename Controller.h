@@ -61,7 +61,7 @@ private:
 	void ship_stop(Ship *ship);
 	void ship_stop_attack(Ship *ship);
 
-	std::map<std::string, command_func> COMMAND_FUNC_MAP {
+	std::map<std::string, command_func> command_func_map {
 			{"quit", &Controller::quit},
 
 			{"default", &Controller::view_default},
@@ -75,7 +75,7 @@ private:
 			{"create", &Controller::model_create}
 	};
 
-	std::map<std::string, ship_func> SHIP_FUNC_MAP {
+	std::map<std::string, ship_func> ship_func_map {
 			{"course", &Controller::ship_course},
 			{"position", &Controller::ship_position},
 			{"destination", &Controller::ship_destination},
