@@ -7,6 +7,8 @@
 #include "Geometry.h"
 #include <string>
 
+class Island;
+
 /***** Ship Class *****/
 /* A Ship has a name, initial position, amount of fuel, and parameters that govern its movement.
 The initial amount of fuel is equal to the supplied fuel capacity - a full fuel tank.
@@ -24,8 +26,6 @@ functions are implemented in this class to throw an Error exception.
 */
 
 enum class State_ship {DOCKED, STOPPED, MOVING_TO_POSITION, MOVING_ON_COURSE, DEAD_IN_THE_WATER, SINKING, SUNK, ON_THE_BOTTOM};
-
-const int SHIP_DOCK_DISTANCE = .1;
 
 class Ship : public Sim_object, public Track_base {
 public:
@@ -75,10 +75,7 @@ public:
 
     // Return true if the ship is Stopped and the distance to the supplied island
     // is less than or equal to 0.1 nm
-    bool can_dock(Island *island_ptr) const
-    {
-        return ship_state == State_ship::STOPPED && cartesian_distance(get_location(), island_ptr->get_location()) <= SHIP_DOCK_DISTANCE;
-    }
+    bool can_dock(Island *island_ptr) const;
 
     /*** Interface to derived classes ***/
     // Update the state of the Ship

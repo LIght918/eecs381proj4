@@ -33,7 +33,7 @@ Model.o: Model.h Model.cpp Ship.h Island.h View.h Geometry.h Ship_factory.h
 Navigation.o: Navigation.h Navigation.cpp Geometry.h
 	$(CC) $(CFLAGS) Navigation.cpp
 
-Ship.o: Ship.h Ship.cpp Model.h Geometry.h Navigation.h Utility.h
+Ship.o: Ship.h Ship.cpp Model.h Geometry.h Navigation.h Utility.h Island.h
 	$(CC) $(CFLAGS) Ship.cpp
 
 Ship_factory.o: Ship_factory.h Ship_factory.cpp Geometry.h Ship.h Tanker.h Cruiser.h

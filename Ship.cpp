@@ -3,6 +3,7 @@
 #include "Geometry.h"
 #include "Navigation.h"
 #include "Utility.h"
+#include "Island.h"
 #include <string>
 #include <iostream>
 
@@ -19,6 +20,8 @@ Ship::Ship(const string &name_, Point position_, double fuel_capacity_,
     cout << "Ship " << get_name() << " constructed" << endl;
 }
 
+const int SHIP_DOCK_DISTANCE = .1;
+
 /*
 Define the destructor function even if it was declared as a pure virtual function.
 This seems odd, because pure functions are usually not defined in the class
@@ -30,6 +33,13 @@ are defining it just to get the destructor message output.
 Ship::~Ship()
 {
     cout << "Ship "  << get_name() << " destructed" << endl;
+}
+
+// Return true if the ship is Stopped and the distance to the supplied island
+// is less than or equal to 0.1 nm
+bool Ship::can_dock(Island *island_ptr) const
+{
+	return ship_state == State_ship::STOPPED && cartesian_distance(get_location(), island_ptr->get_location()) <= SHIP_DOCK_DISTANCE;
 }
 
 /*** Interface to derived classes ***/
