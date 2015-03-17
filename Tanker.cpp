@@ -1,5 +1,6 @@
 #include "Tanker.h"
 #include "Ship.h"
+#include "Island.h"
 #include "Model.h"
 #include "Geometry.h"
 #include "Utility.h"

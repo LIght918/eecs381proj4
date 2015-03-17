@@ -42,7 +42,7 @@ Ship_factory.o: Ship_factory.h Ship_factory.cpp Geometry.h Ship.h Tanker.h Cruis
 Sim_object.o: Sim_object.h Sim_object.cpp
 	$(CC) $(CFLAGS) Sim_object.cpp
 
-Tanker.o: Tanker.h Tanker.cpp Ship.h Model.h Geometry.h Utility.h
+Tanker.o: Tanker.h Tanker.cpp Ship.h Model.h Geometry.h Utility.h Island.h
 	$(CC) $(CFLAGS) Tanker.cpp
 
 Track_base.o: Track_base.h Track_base.cpp Navigation.h
