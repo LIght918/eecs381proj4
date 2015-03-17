@@ -4,7 +4,7 @@
 #include <iostream>
 
 using namespace std;
-using State_warship;
+using namespace State_warship;
 
 // initialize, then output constructor message
 Warship::Warship(const string& name_, Point position_, double fuel_capacity_,

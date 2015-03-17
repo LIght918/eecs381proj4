@@ -8,7 +8,7 @@
 #include <iostream>
 
 using namespace std;
-using State_ship;
+using namespace State_ship;
 
 const string CANNOT_ATTACK_MSG = "Cannot attack!";
 

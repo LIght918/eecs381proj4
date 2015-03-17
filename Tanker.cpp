@@ -7,7 +7,7 @@
 #include <iostream>
 
 using namespace std;
-using State_tanker;
+using namespace State_tanker;
 
 const double TANKER_INIT_FUEL = 100;
 const double TANKER_MAX_SPEED = 10;
