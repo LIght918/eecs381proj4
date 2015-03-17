@@ -3,6 +3,7 @@
 #include "Utility.h"
 #include <string>
 #include <iostream>
+#include <iomanip>
 #include <vector>
 #include <map>
 #include <functional>
@@ -66,13 +67,13 @@ void View::draw()
 			if (map_view[y][x].empty()) map_view[y][x] = object.first.substr(0, SHORTEN_NAME_LENGTH);
 			else map_view[y][x] = VIEW_MULTIPLE_OBJECT;
 		} else
-			objects_out_of_map.push_back(object->first);
+			objects_out_of_map.push_back(object.first);
 	}
 
 	cout << "Display size: " << size << ", scale: " << scale << ", origin: " << origin << endl;
 	if (objects_out_of_map.size() > 0)
 	{
-		for (int i = 0; i < objects_out_of_map.size() - 1; i++)
+		for (size_t i = 0; i < objects_out_of_map.size() - 1; i++)
 		{
 			cout << objects_out_of_map[i] << ", ";
 		}
