@@ -28,7 +28,7 @@ Cruiser::~Cruiser()
     cout << "Cruiser " << get_name() << " destructed" << endl;
 }
 
-void Cruiser::update() override
+void Cruiser::update()
 {
     Warship::update();
     if (is_attacking())
@@ -43,13 +43,13 @@ void Cruiser::update() override
     }
 }
 
-void Cruiser::describe() const override
+void Cruiser::describe() const
 {
     cout << "\nCruiser ";
     Warship::describe();
 }
 
-void Cruiser::receive_hit(int hit_force, Ship *attacker_ptr) override
+void Cruiser::receive_hit(int hit_force, Ship *attacker_ptr)
 {
     Ship::receive_hit(hit_force, attacker_ptr);
     if (!is_attacking())
