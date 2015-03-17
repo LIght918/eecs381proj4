@@ -80,7 +80,7 @@ void Model::update()
     ++time;
     for_each(objects.begin(), objects.end(), [](pair<string, Sim_object*> pair){pair.second->update();});
     vector<Ship*> dead_ships;
-    remove_copy(ships.begin(), ships.end(), dead_ships.begin(), [](Ship *ship){return !ship->is_on_the_bottom();});
+    remove_copy(ships.begin(), ships.end(), dead_ships.begin(), [](pair<string, Ship*> pair){return !pair.second->is_on_the_bottom();});
     for (auto&& dead_ship : dead_ships)
     {
         objects.erase(dead_ship->get_name());
@@ -95,7 +95,7 @@ void Model::update()
 void Model::attach(View* view)
 {
     views.push_back(view);
-    for_each(objects.begin(), objects.end(), [view](Sim_object *object){view->update_location(object->get_name(), object->get_location());});
+    for_each(objects.begin(), objects.end(), [view](pair<string, Sim_object*> pair){view->update_location(pair.second->get_name(), pair.second->get_location());});
 }
 // Detach the View by discarding the supplied pointer from the container of Views
 // - no updates sent to it thereafter.
