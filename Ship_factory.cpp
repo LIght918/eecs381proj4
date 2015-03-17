@@ -20,4 +20,5 @@ Ship * create_ship(const string& name, const string& type, Point initial_positio
     {
         return new Cruiser(name, initial_position);
     }
+    throw Error("Trying to create ship of unknown type!");
 }
