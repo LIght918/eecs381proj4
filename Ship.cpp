@@ -6,6 +6,7 @@
 #include "Island.h"
 #include <string>
 #include <iostream>
+#include <cassert>
 
 using namespace std;
 
@@ -57,7 +58,7 @@ void Ship::update()
 	switch(ship_state)
 	{
 		case State_ship::SINKING:
-			ship_state = SUNK;
+			ship_state = State_ship::SUNK;
 			g_Model_ptr->notify_gone(get_name());
 			cout << get_name() << " sunk" << endl;
 			break;
@@ -119,6 +120,10 @@ void Ship::describe() const
 			break;
 		case State_ship::DEAD_IN_THE_WATER:
 			cout << "Dead in the water" << endl;
+			break;
+		default:
+			// this should never happen, because the other states are covered in the previous switch
+			assert(false);
 			break;
 	}
 }
