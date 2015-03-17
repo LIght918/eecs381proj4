@@ -87,7 +87,7 @@ void Model::update()
             dead_ships.insert(dead_ships.end(), ship_pair.second);
         }
     }
-    for (auto&& dead_ship : ships)
+    for (auto&& dead_ship : dead_ships)
     {
         objects.erase(dead_ship->get_name());
         ships.erase(dead_ship->get_name());
