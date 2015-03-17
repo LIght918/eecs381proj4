@@ -57,3 +57,5 @@ void Cruiser::receive_hit(int hit_force, Ship *attacker_ptr)
         attack(attacker_ptr);
     }
 }
+
+#endif
