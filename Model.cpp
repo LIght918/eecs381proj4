@@ -16,9 +16,19 @@ using namespace placeholders;
 // create the initial objects, output constructor message
 Model::Model()
 {
-    add_island(new Island("Exxon", Point(10, 10), 1000, 200));
-    add_island(new Island("Shell", Point(0, 30), 1000, 200));
-    add_island(new Island("Bermuda", Point(20, 20)));
+    Island *exxon = new Island("Exxon", Point(10, 10), 1000, 200);
+    Island *shell = new Island("Shell", Point(0, 30), 1000, 200);
+    Island *bermuda = new Island("Bermuda", Point(20, 20));
+
+    string short_exxon = exxon->get_name().substr(0, SHORTEN_NAME_LENGTH);
+    islands[short_exxon] = exxon;
+    objects[short_exxon] = exxon;
+    string short_shell = shell->get_name().substr(0, SHORTEN_NAME_LENGTH);
+    islands[short_shell] = shell;
+    objects[short_shell] = shell;
+    string short_bermuda = bermuda->get_name().substr(0, SHORTEN_NAME_LENGTH);
+    islands[short_bermuda] = bermuda;
+    objects[short_bermuda] = bermuda;
 
     add_ship(create_ship("Ajax", "Cruiser", Point (15, 15)));
     add_ship(create_ship("Xerxes", "Cruiser", Point (25, 25)));
@@ -45,7 +55,10 @@ Island* Model::get_island_ptr(const std::string& name) const
 // add a new ship to the list, and update the view
 void Model::add_ship(Ship* ship)
 {
-    ships[ship->get_name().substr(0, SHORTEN_NAME_LENGTH)] = ship;
+    string shortened_name = ship->get_name().substr(0, SHORTEN_NAME_LENGTH);
+    ships[shortened_name] = ship;
+    objects[shortened_name] = ship;
+    notify_location(shortened_name, ship->get_location());
 }
 // will throw Error("Ship not found!") if no ship of that name
 Ship* Model::get_ship_ptr(const std::string& name) const
