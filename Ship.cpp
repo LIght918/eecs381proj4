@@ -10,7 +10,7 @@
 
 using namespace std;
 
-const string CANNOT_ATTACK_MSG = "Cannot attack!";
+const char* const CANNOT_ATTACK_MSG = "Cannot attack!";
 
 Ship::Ship(const string &name_, Point position_, double fuel_capacity_,
         double maximum_speed_, double fuel_consumption_, int resistance_) :
@@ -130,7 +130,7 @@ void Ship::describe() const
 
 void Ship::broadcast_current_state()
 {
-	g_Model_ptr->notify_location(get_name(), position);
+	g_Model_ptr->notify_location(get_name(), get_location());
 }
 
 /*** Command functions ***/
