@@ -79,14 +79,19 @@ void Model::update()
 {
     ++time;
     for_each(objects.begin(), objects.end(), [](pair<string, Sim_object*> pair){pair.second->update();});
-    typedef pair<string, Ship*> ship_pair;
-    vector<ship_pair> dead_ships;
-    remove_copy(ships.begin(), ships.end(), dead_ships.begin(), [](ship_pair pair){return !pair.second->is_on_the_bottom();});
-    for (auto&& dead_ship_pair : dead_ships)
+    vector<Ship*> dead_ships;
+    for (auto&& ship_pair : ships)
     {
-        objects.erase(dead_ship_pair.second->get_name());
-        ships.erase(dead_ship_pair.second->get_name());
-        delete dead_ship_pair.second;
+        if (ship_pair.second->is_on_the_bottom())
+        {
+            dead_ships.insert(ship_pair.second);
+        }
+    }
+    for (auto&& dead_ship : ships)
+    {
+        objects.erase(dead_ship->get_name());
+        ships.erase(dead_ship->get_name());
+        delete dead_ship;
     }
 }
 
