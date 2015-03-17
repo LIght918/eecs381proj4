@@ -52,7 +52,7 @@ void View::draw()
 	vector<string> objects_out_of_map;
 	// make sure the map is big enough for what we want
 	map_view.reserve(size);
-	for_each(map_view.begin(), map_view.end(), bind(&map::reserve, _1, size));
+	for_each(map_view.begin(), map_view.end(), bind(&vector<string>::reserve, _1, size));
 	// fill the map with the empty object icon
 	for_each(map_view.begin(), map_view.end(), [](vector<string>& row) {fill(row.begin(), row.end(), VIEW_NO_OBJECT);});
 
@@ -61,9 +61,9 @@ void View::draw()
 	for (auto&& object : object_data)
 	{
 		int x, y;
-		if (get_subscripts(x, y, object->second))
+		if (get_subscripts(x, y, object.second))
 		{
-			if (map_view[y][x].empty()) map_view[y][x] = shorten_string(object->first);
+			if (map_view[y][x].empty()) map_view[y][x] = object.first.substr(0, SHORTEN_NAME_LENGTH);
 			else map_view[y][x] = VIEW_MULTIPLE_OBJECT;
 		} else
 			objects_out_of_map.push_back(object->first);
