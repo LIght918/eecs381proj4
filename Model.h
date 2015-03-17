@@ -45,13 +45,13 @@ public:
     // either the identical name, or identical in first two characters counts as in-use
 	bool is_name_in_use(const std::string& name) const
     {
-        return objects.find(name.substr(0, SHORTEN_NAME_LENGTH)) != nullptr;
+        return objects.find(name.substr(0, SHORTEN_NAME_LENGTH)) != objects.end();
     }
 
 	// is there such an island?
 	bool is_island_present(const std::string& name) const
     {
-        return islands.find(name.substr(0, SHORTEN_NAME_LENGTH)) != nullptr;
+        return islands.find(name.substr(0, SHORTEN_NAME_LENGTH)) != objects.end();
     }
 	// will throw Error("Island not found!") if no island of that name
 	Island* get_island_ptr(const std::string& name) const;
@@ -59,7 +59,7 @@ public:
 	// is there such an ship?
 	bool is_ship_present(const std::string& name) const
     {
-        return ships.find(name.substr(0, SHORTEN_NAME_LENGTH)) != nullptr;
+        return ships.find(name.substr(0, SHORTEN_NAME_LENGTH)) != objects.end();
     }
 	// add a new ship to the list, and update the view
 	void add_ship(Ship*);
@@ -95,6 +95,7 @@ private:
 	std::map<std::string, Ship*> ships;
 	std::map<std::string, Sim_object*> objects;
 
-    vector<View*> views;
+    std::vector<View*> views;
 };
 
+#endif
