@@ -1,6 +1,7 @@
 #include "Model.h"
 #include <string>
 #include <map>
+#include <iostream>
 #include <vector>
 #include <functional>
 #include <algorithm>
