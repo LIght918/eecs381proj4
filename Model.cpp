@@ -41,7 +41,10 @@ Model::Model()
 // destroy all objects, output destructor message
 Model::~Model()
 {
-    for_each(objects.begin(), objects.end(), [](Sim_object *object) {delete object;});
+    for (auto&& object : objects)
+    {
+        delete object;
+    }
     cout << "Model destructed" << endl;
 }
 
@@ -72,12 +75,14 @@ Ship* Model::get_ship_ptr(const std::string& name) const
 // tell all objects to describe themselves
 void Model::describe() const
 {
+    // cannot use a direct mem_fn here because describe is virtual
     for_each(objects.begin(), objects.end(), [](Sim_object *object){object->describe();});
 }
 // increment the time, and tell all objects to update themselves
 void Model::update()
 {
     ++time;
+    // cannot use a direct mem_fn here because update is virtual
     for_each(objects.begin(), objects.end(), [](Sim_object *object){object->update();});
     vector<Ship*> dead_ships;
     remove_copy(ships.begin(), ships.end(), dead_ships.begin(), [](Ship *ship){return !ship->is_on_the_bottom();});
