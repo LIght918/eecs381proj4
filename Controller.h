@@ -59,7 +59,7 @@ private:
 	void ship_stop_attack(Ship *ship);
 
 	// function maps
-	static std::map<std::string, command_func> command_func_map {
+	static std::map<std::string, command_func> command_func_map = {
 			{"quit", quit},
 
 			{"default", view_default},
@@ -73,7 +73,7 @@ private:
 			{"create", model_create}
 	};
 
-	static std::map<std::string, ship_func> ship_func_map {
+	static std::map<std::string, ship_func> ship_func_map = {
 			{"course", ship_course},
 			{"position", ship_position},
 			{"destination", ship_destination},
