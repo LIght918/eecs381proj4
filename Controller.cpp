@@ -43,7 +43,7 @@ void Controller::run()
             {
                 // if so, run function and return if it returns true
                 auto func = command_func_map[command];
-                if (this->*func(view)) return;
+                if ((this->*func)(view)) return;
             }
             else
             {
@@ -60,7 +60,7 @@ void Controller::run()
                 {
                     // if so, run the function
                     auto func = ship_func_map[ship_command];
-                    this->*func(ship);
+                    (this->*func)(ship);
                 }
                 else
                 {
