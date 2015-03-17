@@ -82,6 +82,7 @@ void Tanker::update()
         if (tanker_state != State_tanker::NO_CARGO_DEST) end_cycle();
         return;
     }
+    double cargo_needed = cargo_capacity - cargo; // used in loading
     switch(tanker_state)
     {
         case State_tanker::NO_CARGO_DEST:
@@ -97,7 +98,6 @@ void Tanker::update()
             return;
         case State_tanker::LOADING:
             refuel();
-            double cargo_needed = cargo_capacity - cargo;
             if (cargo_needed < REFUEL_MIN)
             {
                 cargo = cargo_capacity;
@@ -166,7 +166,7 @@ void Tanker::start_cycle()
         if (cargo > 0 && can_dock(unload_dest))
         {
             dock(unload_dest);
-            tanker_state = UNLOADING;
+            tanker_state = State_tanker::UNLOADING;
             return;
         }
     }
