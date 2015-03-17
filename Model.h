@@ -6,6 +6,7 @@
 #include <vector>
 #include "Utility.h"
 
+class Sim_object;
 class Ship;
 class Island;
 class View;
@@ -44,13 +45,13 @@ public:
     // either the identical name, or identical in first two characters counts as in-use
 	bool is_name_in_use(const std::string& name) const
     {
-        return objects.find(shorten_string(name)) != nullptr;
+        return objects.find(name.substr(0, SHORTEN_NAME_LENGTH)) != nullptr;
     }
 
 	// is there such an island?
 	bool is_island_present(const std::string& name) const
     {
-        return islands.find(shorten_string(name)) != nullptr;
+        return islands.find(name.substr(0, SHORTEN_NAME_LENGTH)) != nullptr;
     }
 	// will throw Error("Island not found!") if no island of that name
 	Island* get_island_ptr(const std::string& name) const;
@@ -58,7 +59,7 @@ public:
 	// is there such an ship?
 	bool is_ship_present(const std::string& name) const
     {
-        return ships.find(shorten_string(name)) != nullptr;
+        return ships.find(name.substr(0, SHORTEN_NAME_LENGTH)) != nullptr;
     }
 	// add a new ship to the list, and update the view
 	void add_ship(Ship*);
