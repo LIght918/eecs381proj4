@@ -257,7 +257,7 @@ time less than 1.0.
 For clarity in specifying the computation, this code assumes the specified private variable names, 
 but you may change the variable names or enum class names, or state names if you wish (e.g. movement_state).
 */
-void Ship:: calculate_movement()
+void Ship::calculate_movement()
 {
 	// Compute values for how much we need to move, and how much we can, and how long we can,
 	// given the fuel state, then decide what to do.
@@ -312,7 +312,7 @@ void Ship:: calculate_movement()
 }
 
 // Check if the ship can move and the speed is within the max, and throws errors otherwise
-void check_movement_and_speed(double speed)
+void Ship::check_movement_and_speed(double speed)
 {
 	if (!can_move())
 	{
