@@ -72,13 +72,13 @@ Ship* Model::get_ship_ptr(const std::string& name) const
 // tell all objects to describe themselves
 void Model::describe() const
 {
-    for_each(objects.begin(), objects.end(), mem_fn(&Sim_object::describe()));
+    for_each(objects.begin(), objects.end(), bind(&Sim_object::describe()));
 }
 // increment the time, and tell all objects to update themselves
 void Model::update()
 {
     ++time;
-    for_each(objects.begin(), objects.end(), mem_fn(&Sim_object::update()));
+    for_each(objects.begin(), objects.end(), bind(&Sim_object::update()));
     vector<Ship*> dead_ships;
     remove_copy(ships.begin(), ships.end(), dead_ships.begin(), [](Ship *ship){return !ship->is_on_the_bottom();});
     for (auto&& dead_ship : dead_ships)
