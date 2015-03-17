@@ -15,7 +15,7 @@ using namespace std;
 
 const string UNRECOGNIZED_ERROR_MSG = "Unrecognized command!";
 
-const map<string, command_func> COMMAND_FUNC_MAP {
+const map<string, Controller::command_func> COMMAND_FUNC_MAP {
         {"quit", &Controller::quit},
 
         {"default", &Controller::view_default},
@@ -29,7 +29,7 @@ const map<string, command_func> COMMAND_FUNC_MAP {
         {"create", &Controller::model_create}
 };
 
-const map<string, ship_func> SHIP_FUNC_MAP {
+const map<string, Controller::ship_func> SHIP_FUNC_MAP {
         {"course", &Controller::ship_course},
         {"position", &Controller::ship_position},
         {"destination", &Controller::ship_destination},
