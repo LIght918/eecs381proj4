@@ -1,8 +1,6 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
-#include <map>
-
 class Model;
 class View;
 class Ship;
@@ -59,33 +57,6 @@ private:
 	void ship_refuel(Ship *ship);
 	void ship_stop(Ship *ship);
 	void ship_stop_attack(Ship *ship);
-
-	// function maps
-	static std::map<std::string, command_func> command_func_map {
-			{"quit", &Controller::quit},
-
-			{"default", &Controller::view_default},
-			{"size", &Controller::view_size},
-			{"zoom", &Controller::view_zoom},
-			{"pan", &Controller::view_pan},
-			{"show", &Controller::view_show},
-
-			{"status", &Controller::model_status},
-			{"go", &Controller::model_go},
-			{"create", &Controller::model_create}
-	};
-	static std::map<std::string, ship_func> ship_func_map {
-			{"course", &Controller::ship_course},
-			{"position", &Controller::ship_position},
-			{"destination", &Controller::ship_destination},
-			{"load_at", &Controller::ship_load_at},
-			{"unload_at", &Controller::ship_unload_at},
-			{"dock_at", &Controller::ship_dock_at},
-			{"attack", &Controller::ship_attack},
-			{"refuel", &Controller::ship_refuel},
-			{"stop", &Controller::ship_stop},
-			{"stop_attack", &Controller::ship_stop_attack}
-	};
 };
 
 #endif

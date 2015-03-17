@@ -15,6 +15,33 @@ using namespace std;
 
 const string UNRECOGNIZED_ERROR_MSG = "Unrecognized command!";
 
+const map<string, command_func> COMMAND_FUNC_MAP {
+        {"quit", &Controller::quit},
+
+        {"default", &Controller::view_default},
+        {"size", &Controller::view_size},
+        {"zoom", &Controller::view_zoom},
+        {"pan", &Controller::view_pan},
+        {"show", &Controller::view_show},
+
+        {"status", &Controller::model_status},
+        {"go", &Controller::model_go},
+        {"create", &Controller::model_create}
+};
+
+const map<string, ship_func> SHIP_FUNC_MAP {
+        {"course", &Controller::ship_course},
+        {"position", &Controller::ship_position},
+        {"destination", &Controller::ship_destination},
+        {"load_at", &Controller::ship_load_at},
+        {"unload_at", &Controller::ship_unload_at},
+        {"dock_at", &Controller::ship_dock_at},
+        {"attack", &Controller::ship_attack},
+        {"refuel", &Controller::ship_refuel},
+        {"stop", &Controller::ship_stop},
+        {"stop_attack", &Controller::ship_stop_attack}
+};
+
 // output constructor message
 Controller::Controller()
 {
@@ -39,10 +66,10 @@ void Controller::run()
             string command;
             cin >> command;
             // first, check the command func map if this a command word
-            if (command_func_map.find(command) != command_func_map.end())
+            if (COMMAND_FUNC_MAP.find(command) != COMMAND_FUNC_MAP.end())
             {
                 // if so, run function and return if it returns true
-                if (command_func_map[command](view)) return;
+                if (COMMAND_FUNC_MAP[command](view)) return;
             }
             else
             {
@@ -54,10 +81,10 @@ void Controller::run()
                 string ship_command;
                 cin >> ship_command;
                 // check the ship func map if this is a command word
-                if (ship_func_map.find(ship_command) != ship_func_map.end())
+                if (SHIP_FUNC_MAP.find(ship_command) != SHIP_FUNC_MAP.end())
                 {
                     // if so, run the function
-                    ship_func_map[ship_command](ship);
+                    SHIP_FUNC_MAP[ship_command](ship);
                 }
                 else
                 {
