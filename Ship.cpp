@@ -13,8 +13,9 @@ const string CANNOT_ATTACK_MSG = "Cannot attack!";
 
 Ship::Ship(const string &name_, Point position_, double fuel_capacity_,
         double maximum_speed_, double fuel_consumption_, int resistance_) :
-        Sim_object(name_), fuel_consumption(fuel_consumption_), resistance(resistance_), max_speed(maximum_speed_),
-        Track_base(position_, Course_speed(0, 0)), ship_state(State_ship::STOPPED), docked_at(nullptr)
+        Sim_object(name_), Track_base(position_, Course_speed(0, 0)), fuel(fuel_capacity_),
+		fuel_consumption(fuel_consumption_), fuel_capacity(fuel_capacity_), max_speed(maximum_speed_),
+		resistance(resistance_), ship_state(State_ship::STOPPED), docked_at(nullptr)
 {
     cout << "Ship " << get_name() << " constructed" << endl;
 }
@@ -43,7 +44,7 @@ bool Ship::can_dock(Island *island_ptr) const
 
 /*** Interface to derived classes ***/
 // Update the state of the Ship
-void Ship::update() override
+void Ship::update()
 {
 	if (is_afloat() && resistance < 0)
 	{
@@ -84,7 +85,7 @@ void Ship::update() override
 }
 
 // output a description of current state to cout
-void Ship::describe() const override
+void Ship::describe() const
 {
 	cout << get_name() << " at " << get_location();
 	switch(ship_state)
@@ -122,7 +123,7 @@ void Ship::describe() const override
 	}
 }
 
-void Ship::broadcast_current_state() override
+void Ship::broadcast_current_state()
 {
 	g_Model_ptr->notify_location(get_name(), position);
 }
