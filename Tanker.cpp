@@ -71,7 +71,7 @@ void Tanker::set_unload_destination(Island *dest)
 void Tanker::stop()
 {
     Ship::stop();
-    stop_cycle();
+    end_cycle();
 }
 
 void Tanker::update()
@@ -79,7 +79,7 @@ void Tanker::update()
     Ship::update();
     if (!can_move())
     {
-        if (tanker_state != State_tanker::NO_CARGO_DEST) stop_cycle();
+        if (tanker_state != State_tanker::NO_CARGO_DEST) end_cycle();
         return;
     }
     switch(tanker_state)
