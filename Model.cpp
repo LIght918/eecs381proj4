@@ -84,7 +84,7 @@ void Model::update()
     {
         if (ship_pair.second->is_on_the_bottom())
         {
-            dead_ships.insert(ship_pair.second);
+            dead_ships.insert(dead_ships.end(), ship_pair.second);
         }
     }
     for (auto&& dead_ship : ships)
