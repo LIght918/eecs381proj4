@@ -59,31 +59,31 @@ private:
 	void ship_stop_attack(Ship *ship);
 
 	// function maps
-	static std::map<std::string, command_func> command_func_map = {
-			{"quit", quit},
+	static std::map<std::string, command_func> command_func_map {
+			{"quit", &quit},
 
-			{"default", view_default},
-			{"size", view_size},
-			{"zoom", view_zoom},
-			{"pan", view_pan},
-			{"show", view_show},
+			{"default", &view_default},
+			{"size", &view_size},
+			{"zoom", &view_zoom},
+			{"pan", &view_pan},
+			{"show", &view_show},
 
-			{"status", model_status},
-			{"go", model_go},
-			{"create", model_create}
+			{"status", &model_status},
+			{"go", &model_go},
+			{"create", &model_create}
 	};
 
-	static std::map<std::string, ship_func> ship_func_map = {
-			{"course", ship_course},
-			{"position", ship_position},
-			{"destination", ship_destination},
-			{"load_at", ship_load_at},
-			{"unload_at", ship_unload_at},
-			{"dock_at", ship_dock_at},
-			{"attack", ship_attack},
-			{"refuel", ship_refuel},
-			{"stop", ship_stop},
-			{"stop_attack", ship_stop_attack}
+	static std::map<std::string, ship_func> ship_func_map {
+			{"course", &ship_course},
+			{"position", &ship_position},
+			{"destination", &ship_destination},
+			{"load_at", &ship_load_at},
+			{"unload_at", &ship_unload_at},
+			{"dock_at", &ship_dock_at},
+			{"attack", &ship_attack},
+			{"refuel", &ship_refuel},
+			{"stop", &ship_stop},
+			{"stop_attack", &ship_stop_attack}
 	};
 };
 
