@@ -13,7 +13,7 @@ Island::Island(const string &name_, Point position_, double fuel_, double produc
 }
 
 // output destructor message
-~Island::Island()
+Island::~Island()
 {
     cout << "Island " << get_name() << " destructed" << endl;
 }
