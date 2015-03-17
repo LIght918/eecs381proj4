@@ -42,7 +42,8 @@ void Controller::run()
             if (command_func_map.find(command) != command_func_map.end())
             {
                 // if so, run function and return if it returns true
-                if (this->*(command_func_map[command])(view)) return;
+                auto func = command_func_map[command];
+                if (this->*func(view)) return;
             }
             else
             {
@@ -58,7 +59,8 @@ void Controller::run()
                 if (ship_func_map.find(ship_command) != ship_func_map.end())
                 {
                     // if so, run the function
-                    this->*(ship_func_map[ship_command])(ship);
+                    auto func = ship_func_map[ship_command];
+                    this->*func(ship);
                 }
                 else
                 {
