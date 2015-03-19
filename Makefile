@@ -36,7 +36,7 @@ Navigation.o: Navigation.h Navigation.cpp Geometry.h
 Ship.o: Ship.h Ship.cpp Model.h Geometry.h Navigation.h Utility.h Island.h
 	$(CC) $(CFLAGS) Ship.cpp
 
-Ship_factory.o: Ship_factory.h Ship_factory.cpp Geometry.h Ship.h Tanker.h Cruiser.h
+Ship_factory.o: Ship_factory.h Ship_factory.cpp Geometry.h Ship.h Tanker.h Cruiser.h Utility.h
 	$(CC) $(CFLAGS) Ship_factory.cpp
 
 Sim_object.o: Sim_object.h Sim_object.cpp
@@ -54,7 +54,7 @@ Utility.o: Utility.h Utility.cpp
 View.o: View.h View.cpp Geometry.h Utility.h
 	$(CC) $(CFLAGS) View.cpp
 
-Warship.o: Warship.h Warship.cpp Ship.h
+Warship.o: Warship.h Warship.cpp Ship.h Utility.h
 	$(CC) $(CFLAGS) Warship.cpp
 
 clean:
