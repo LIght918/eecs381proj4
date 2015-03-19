@@ -119,7 +119,7 @@ void Tanker::update()
                 tanker_state = State_tanker::MOVING_TO_LOAD;
                 return;
             }
-            unload_dest->provide_fuel(cargo);
+            unload_dest->accept_fuel(cargo);
             cargo = 0;
             return;
     }
@@ -192,5 +192,6 @@ void Tanker::start_cycle()
 void Tanker::end_cycle()
 {
     load_dest = unload_dest = nullptr;
+    tanker_state = State_tanker::NO_CARGO_DEST;
     cout << get_name() << " now has no cargo destinations" << endl;
 }
