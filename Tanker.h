@@ -63,12 +63,6 @@ private:
 
 	// Ends the tanker's cargo cycle
 	void end_cycle();
-
-	// Throws an error if the cargo destinations are the same
-	void check_cargo_dest_same();
-
-	// Throws an error if there are cargo destinations
-	void check_no_cargo_dest();
 };
 
 #endif

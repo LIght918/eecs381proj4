@@ -27,13 +27,13 @@ Warship::~Warship()
 void Warship::update()
 {
     Ship::update();
-    if (warship_state == State_warship::ATTACKING)
+    if (warship_state == State_warship::NOT_ATTACKING) return;
+    if (!is_afloat() || !target->is_afloat())
     {
-        if (!is_afloat() || !target->is_afloat())
-        {
-            stop_attack();
-            return;
-        }
+        stop_attack();
+    }
+    else
+    {
         cout << get_name() << " is attacking" << endl;
     }
 }

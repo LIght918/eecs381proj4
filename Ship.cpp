@@ -12,6 +12,7 @@
 using namespace std;
 
 const char* const CANNOT_ATTACK_MSG = "Cannot attack!";
+const int SHIP_DOCK_DISTANCE = .1;
 
 Ship::Ship(const string &name_, Point position_, double fuel_capacity_,
         double maximum_speed_, double fuel_consumption_, int resistance_) :
@@ -21,8 +22,6 @@ Ship::Ship(const string &name_, Point position_, double fuel_capacity_,
 {
     cout << "Ship " << get_name() << " constructed" << endl;
 }
-
-const int SHIP_DOCK_DISTANCE = .1;
 
 /*
 Define the destructor function even if it was declared as a pure virtual function.

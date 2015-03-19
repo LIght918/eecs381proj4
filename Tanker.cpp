@@ -10,6 +10,8 @@
 
 using namespace std;
 
+const char* const CARGO_DEST_SAME_MSG = "Load and unload cargo destinations are the same!";
+const char* const TANKER_HAS_DEST_MSG = "Tanker has cargo destinations!";
 const double TANKER_INIT_FUEL = 100;
 const double TANKER_MAX_SPEED = 10;
 const double TANKER_FUEL_CONSUMPTION = 2;
@@ -36,13 +38,13 @@ Tanker::~Tanker()
 // if so, throw an Error("Tanker has cargo destinations!"); otherwise, simply call the Ship functions.
 void Tanker::set_destination_position_and_speed(Point destination, double speed)
 {
-    check_no_cargo_dest();
+    if (tanker_state != State_tanker::NO_CARGO_DEST) throw Error(TANKER_HAS_DEST_MSG);
     Ship::set_destination_position_and_speed(destination, speed);
 }
 
 void Tanker::set_course_and_speed(double course, double speed)
 {
-    check_no_cargo_dest();
+    if (tanker_state != State_tanker::NO_CARGO_DEST) throw Error(TANKER_HAS_DEST_MSG);
     Ship::set_course_and_speed(course, speed);
 }
 
@@ -53,9 +55,9 @@ void Tanker::set_course_and_speed(double course, double speed)
 void Tanker::set_load_destination(Island *dest)
 {
     assert(dest);
-    check_no_cargo_dest();
+    if (tanker_state != State_tanker::NO_CARGO_DEST) throw Error(TANKER_HAS_DEST_MSG);
+    if (unload_dest == dest) throw Error(CARGO_DEST_SAME_MSG);
     load_dest = dest;
-    check_cargo_dest_same();
     cout << get_name() << " will load at " << dest->get_name() << endl;
     if (unload_dest != nullptr) start_cycle();
 }
@@ -63,9 +65,9 @@ void Tanker::set_load_destination(Island *dest)
 void Tanker::set_unload_destination(Island *dest)
 {
     assert(dest);
-    check_no_cargo_dest();
+    if (tanker_state != State_tanker::NO_CARGO_DEST) throw Error(TANKER_HAS_DEST_MSG);
+    if (load_dest == dest) throw Error(CARGO_DEST_SAME_MSG);
     unload_dest = dest;
-    check_cargo_dest_same();
     cout << get_name() << " will unload at " << dest->get_name() << endl;
     if (load_dest != nullptr) start_cycle();
 }
@@ -155,9 +157,16 @@ void Tanker::start_cycle()
 {
     if (is_docked())
     {
-        if (get_docked_Island() == load_dest) tanker_state = State_tanker::LOADING;
-        if (get_docked_Island() == unload_dest) tanker_state = State_tanker::UNLOADING;
-        return;
+        if (get_docked_Island() == load_dest)
+        {
+            tanker_state = State_tanker::LOADING;
+            return;
+        }
+        if (get_docked_Island() == unload_dest)
+        {
+            tanker_state = State_tanker::UNLOADING;
+            return;
+        }
     }
     if (!is_moving())
     {
@@ -194,22 +203,4 @@ void Tanker::end_cycle()
     load_dest = unload_dest = nullptr;
     tanker_state = State_tanker::NO_CARGO_DEST;
     cout << get_name() << " now has no cargo destinations" << endl;
-}
-
-// Throws an error if the cargo destinations are the same
-void Tanker::check_cargo_dest_same()
-{
-    if (load_dest == unload_dest)
-    {
-        throw Error("Load and unload cargo destinations are the same!");
-    }
-}
-
-// Throws an error if there are cargo destinations
-void Tanker::check_no_cargo_dest()
-{
-    if (tanker_state != State_tanker::NO_CARGO_DEST)
-    {
-        throw Error("Tanker has cargo destinations!");
-    }
 }
