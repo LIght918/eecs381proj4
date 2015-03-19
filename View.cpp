@@ -51,6 +51,7 @@ void View::draw()
 {
 	// save cout flags
 	auto old_flags = cout.flags();
+	int old_precision = cout.precision();
 	cout.precision(0);
 
 	vector<vector<string>> map_view;
@@ -107,8 +108,10 @@ void View::draw()
 		cout << setw(SHORTEN_NAME_LENGTH * VIEW_LINES_PER_AXIS_LABEL) << (origin.x + scale * x);
 	}
 	cout << endl;
-	// reinstate cout flags
+
+	// restore cout flags
 	cout.flags(old_flags);
+	cout.precision(old_precision);
 }
 
 // modify the display parameters
