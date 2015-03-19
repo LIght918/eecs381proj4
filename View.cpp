@@ -53,7 +53,7 @@ void View::draw()
 	vector<string> objects_out_of_map;
 	// make sure the map is big enough for what we want
 	map_view.reserve(size);
-	for_each(map_view.begin(), map_view.end(), bind(&vector<string>::reserve, _1, size));
+	for_each(map_view.begin(), map_view.end(), [](vector<string>& row) {row.reserve(size);});
 	// fill the map with the empty object icon
 	for_each(map_view.begin(), map_view.end(), [](vector<string>& row) {fill(row.begin(), row.end(), VIEW_NO_OBJECT);});
 
@@ -89,6 +89,7 @@ void View::draw()
 		{
 			cout << setw(VIEW_AXIS_LABEL_MAX) << (origin.y + scale * y) << " ";
 		}
+		// iterate through the map of this row
 		for (int x = 0; x < size; x++)
 		{
 			cout << map_view[y][x];
