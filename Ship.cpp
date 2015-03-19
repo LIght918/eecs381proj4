@@ -5,6 +5,7 @@
 #include "Utility.h"
 #include "Island.h"
 #include <string>
+#include <sstream>
 #include <iostream>
 #include <cassert>
 
@@ -108,10 +109,14 @@ void Ship::describe() const
 	switch(ship_state)
 	{
 		case State_ship::MOVING_TO_POSITION:
-			cout << "Moving to " << destination << " on " << get_course() << endl;
+			cout << "Moving to " << destination << " on ";
+			print_course_and_speed();
+			cout << endl;
 			break;
 		case State_ship::MOVING_ON_COURSE:
-			cout << "Moving on " << get_course() << endl;
+			cout << "Moving on ";
+			print_course_and_speed();
+			cout << endl;
 			break;
 		case State_ship::DOCKED:
 			cout << "Docked at " << get_docked_Island() << endl;
@@ -146,7 +151,9 @@ void Ship::set_destination_position_and_speed(Point destination_position, double
 	set_speed(speed);
 	ship_state = State_ship::MOVING_TO_POSITION;
 	docked_at = nullptr;
-	cout << get_name() << " will sail on course " << get_course() << " deg, speed " << get_speed() << " nm/hr to " << destination_position << endl;
+	cout << get_name() << " will sail on ";
+	print_course_and_speed();
+	cout << " to " << destination_position << endl;
 }
 
 // Start moving on a course and speed
@@ -159,7 +166,9 @@ void Ship::set_course_and_speed(double course, double speed)
 	set_speed(speed);
 	ship_state = State_ship::MOVING_ON_COURSE;
 	docked_at = nullptr;
-	cout << get_name() << " will sail on course " << get_course() << " deg, speed " << get_speed() << " nm/hr" << endl;
+	cout << get_name() << " will sail on ";
+	print_course_and_speed();
+	cout << endl;
 }
 
 // Stop moving
@@ -326,4 +335,10 @@ void Ship::check_movement_and_speed(double speed)
 	{
 		throw Error("Ship cannot go that fast!");
 	}
+}
+
+// Prints the course and speed
+void print_course_and_speed()
+{
+	cout << "course " << get_course() << " deg, speed " << get_speed() << " nm/hr";
 }

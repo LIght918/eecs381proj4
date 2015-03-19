@@ -163,6 +163,9 @@ private:
     // Check if the ship can move and the speed is within the max, and throws errors otherwise
     void check_movement_and_speed(double speed);
 
+    // Prints the course and speed
+    void print_course_and_speed();
+
 };
 
 #endif
