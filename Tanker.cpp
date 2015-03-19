@@ -6,6 +6,7 @@
 #include "Utility.h"
 #include <string>
 #include <iostream>
+#include <cassert>
 
 using namespace std;
 
@@ -51,20 +52,22 @@ void Tanker::set_course_and_speed(double course, double speed)
 // if both destinations are now set, start the cargo cycle
 void Tanker::set_load_destination(Island *dest)
 {
+    assert(dest);
     check_no_cargo_dest();
     load_dest = dest;
     check_cargo_dest_same();
     cout << get_name() << " will load at " << dest->get_name() << endl;
-    start_cycle();
+    if (unload_dest != nullptr) start_cycle();
 }
 
 void Tanker::set_unload_destination(Island *dest)
 {
+    assert(dest);
     check_no_cargo_dest();
     unload_dest = dest;
     check_cargo_dest_same();
     cout << get_name() << " will unload at " << dest->get_name() << endl;
-    start_cycle();
+    if (load_dest != nullptr) start_cycle();
 }
 
 // when told to stop, clear the cargo destinations and stop
