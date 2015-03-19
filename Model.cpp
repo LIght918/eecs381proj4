@@ -14,10 +14,10 @@
 using namespace std;
 using namespace placeholders;
 
-Model* g_Model_ptr;
+Model* g_Model_ptr = new Model();
 
 // create the initial objects, output constructor message
-Model::Model()
+Model::Model() : time(0)
 {
     Island *exxon = new Island("Exxon", Point(10, 10), 1000, 200);
     Island *shell = new Island("Shell", Point(0, 30), 1000, 200);
