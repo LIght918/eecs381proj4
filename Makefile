@@ -1,7 +1,7 @@
 CC = g++
 LD = g++
 
-CFLAGS = -c -pedantic-errors -std=c++11 -Wall
+CFLAGS = -c -pedantic-errors -std=c++11 -Wall -g
 LFLAGS = -pedantic -Wall
 
 OBJS = p4_main.o Controller.o Cruiser.o Geometry.o Island.o Model.o Navigation.o Ship.o Ship_factory.o Sim_object.o Tanker.o Track_base.o Utility.o View.o Warship.o
