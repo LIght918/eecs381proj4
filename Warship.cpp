@@ -58,7 +58,7 @@ void Warship::stop_attack()
     if (warship_state != State_warship::ATTACKING) throw Error("Was not attacking!");
     warship_state = State_warship::NOT_ATTACKING;
     target = nullptr;
-    cout << get_name() << " stopping attack";
+    cout << get_name() << " stopping attack" << endl;
 }
 
 void Warship::describe() const
