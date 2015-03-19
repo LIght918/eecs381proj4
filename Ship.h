@@ -164,7 +164,7 @@ private:
     void check_movement_and_speed(double speed);
 
     // Prints the course and speed
-    void print_course_and_speed();
+    void print_course_and_speed() const;
 
 };
 

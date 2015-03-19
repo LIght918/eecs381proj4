@@ -338,7 +338,7 @@ void Ship::check_movement_and_speed(double speed)
 }
 
 // Prints the course and speed
-void Ship::print_course_and_speed()
+void Ship::print_course_and_speed() const
 {
 	cout << "course " << get_course() << " deg, speed " << get_speed() << " nm/hr";
 }
