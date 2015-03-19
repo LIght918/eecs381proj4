@@ -10,10 +10,12 @@
 #include <string>
 #include <iostream>
 #include <map>
+#include <limits>
 
 using namespace std;
 
 const char* const UNRECOGNIZED_ERROR_MSG = "Unrecognized command!";
+const int MAX_COURSE_DEGREES = 360;
 
 // output constructor message
 Controller::Controller()
@@ -70,6 +72,7 @@ void Controller::run()
         catch (Error& e)
         {
             cout << e.what() << endl;
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
         }
         catch (...)
         {
@@ -88,7 +91,7 @@ int Controller::read_int()
 }
 double Controller::read_double()
 {
-    int new_double;
+    double new_double;
     if (!(cin >> new_double)) throw Error("Expected a double!");
     return new_double;
 }
@@ -174,7 +177,7 @@ bool Controller::model_create(View *view)
 void Controller::ship_course(Ship *ship)
 {
     double course = read_double();
-    if (course < 0 || course >= 360) throw Error("Invalid heading entered!");
+    if (course < 0 || course >= MAX_COURSE_DEGREES) throw Error("Invalid heading entered!");
     ship->set_course_and_speed(course, read_speed());
 }
 void Controller::ship_position(Ship *ship)
