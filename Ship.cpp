@@ -40,6 +40,7 @@ Ship::~Ship()
 // is less than or equal to 0.1 nm
 bool Ship::can_dock(Island *island_ptr) const
 {
+	assert(island_ptr);
 	return ship_state == State_ship::STOPPED && cartesian_distance(get_location(), island_ptr->get_location()) <= SHIP_DOCK_DISTANCE;
 }
 
@@ -179,6 +180,7 @@ void Ship::stop()
 // may throw Error("Can't dock!");
 void Ship::dock(Island *island_ptr)
 {
+	assert(island_ptr);
 	if (!can_dock(island_ptr))
 	{
 		throw Error("Can't dock!");
