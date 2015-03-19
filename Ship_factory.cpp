@@ -3,6 +3,7 @@
 #include "Ship.h"
 #include "Tanker.h"
 #include "Cruiser.h"
+#include "Utility.h"
 #include <string>
 
 using namespace std;

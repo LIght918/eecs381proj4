@@ -195,3 +195,21 @@ void Tanker::end_cycle()
     tanker_state = State_tanker::NO_CARGO_DEST;
     cout << get_name() << " now has no cargo destinations" << endl;
 }
+
+// Throws an error if the cargo destinations are the same
+void Tanker::check_cargo_dest_same()
+{
+    if (load_dest == unload_dest)
+    {
+        throw Error("Load and unload cargo destinations are the same!");
+    }
+}
+
+// Throws an error if there are cargo destinations
+void Tanker::check_no_cargo_dest()
+{
+    if (tanker_state != State_tanker::NO_CARGO_DEST)
+    {
+        throw Error("Tanker has cargo destinations!");
+    }
+}

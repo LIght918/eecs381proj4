@@ -65,22 +65,10 @@ private:
 	void end_cycle();
 
 	// Throws an error if the cargo destinations are the same
-	void check_cargo_dest_same()
-	{
-		if (load_dest == unload_dest)
-		{
-			throw Error("Load and unload cargo destinations are the same!");
-		}
-	}
+	void check_cargo_dest_same();
 
 	// Throws an error if there are cargo destinations
-	void check_no_cargo_dest()
-	{
-		if (tanker_state != State_tanker::NO_CARGO_DEST)
-		{
-			throw Error("Tanker has cargo destinations!");
-		}
-	}
+	void check_no_cargo_dest();
 };
 
 #endif
