@@ -56,15 +56,9 @@ void View::draw()
 	vector<string> objects_out_of_map;
 	// a row in the map must start out filled only with VIEW_NO_OBJECTs
 	vector<string> initial_row;
-	for (int i = 0; i < size; i++)
-	{
-		initial_row.push_back(VIEW_NO_OBJECT);
-	}
+	for (int i = 0; i < size; i++) initial_row.push_back(VIEW_NO_OBJECT);
 	// fill the map with copies of the initial row
-	for (int i = 0; i < size; i++)
-	{
-		map_view.push_back(vector<string>(initial_row));
-	}
+	for (int i = 0; i < size; i++) map_view.push_back(vector<string>(initial_row));
 
 	// generate the map
 	// each object in object_data is a pair where first is the name and second is the Point

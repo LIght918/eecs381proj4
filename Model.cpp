@@ -66,7 +66,7 @@ void Model::add_ship(Ship* ship)
     string shortened_name = ship->get_name().substr(0, SHORTEN_NAME_LENGTH);
     ships[shortened_name] = ship;
     objects[shortened_name] = ship;
-    notify_location(shortened_name, ship->get_location());
+    notify_location(ship->get_name(), ship->get_location());
 }
 // will throw Error("Ship not found!") if no ship of that name
 Ship* Model::get_ship_ptr(const std::string& name) const
