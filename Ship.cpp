@@ -119,7 +119,7 @@ void Ship::describe() const
 			cout << endl;
 			break;
 		case State_ship::DOCKED:
-			cout << "Docked at " << get_docked_Island() << endl;
+			cout << "Docked at " << get_docked_Island()->get_name() << endl;
 			break;
 		case State_ship::STOPPED:
 			cout << "Stopped" << endl;
