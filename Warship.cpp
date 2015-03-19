@@ -74,5 +74,5 @@ void Warship::describe() const
 void Warship::fire_at_target()
 {
     cout << get_name() << " fires" << endl;
-    target->receive_hit(firepower, target);
+    target->receive_hit(firepower, this);
 }
