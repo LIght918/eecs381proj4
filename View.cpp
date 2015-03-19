@@ -73,8 +73,7 @@ void View::draw()
 			cout << "x = " << x << ", y = " << y << endl;
 			if (map_view[y][x] == VIEW_NO_OBJECT) map_view[y][x] = object.first.substr(0, SHORTEN_NAME_LENGTH);
 			else map_view[y][x] = VIEW_MULTIPLE_OBJECT;
-		} else
-			objects_out_of_map.push_back(object.first);
+		} else objects_out_of_map.push_back(object.first);
 	}
 
 	cout << "Display size: " << size << ", scale: " << scale << ", origin: " << origin << endl;
@@ -94,7 +93,7 @@ void View::draw()
 		if (y % VIEW_LINES_PER_AXIS_LABEL == 0)
 		{
 			cout << setw(VIEW_AXIS_LABEL_MAX) << (origin.y + scale * y) << " ";
-		}
+		} else cout << setw(VIEW_AXIS_LABEL_MAX + 1) << " ";
 		// iterate through the map of this row
 		for (int x = 0; x < size; x++)
 		{
