@@ -146,14 +146,15 @@ void Ship::broadcast_current_state()
 void Ship::set_destination_position_and_speed(Point destination_position, double speed)
 {
 	check_movement_and_speed(speed);
-	Compass_vector compass(get_location(), destination_position);
+	destination = destination_position;
+	Compass_vector compass(get_location(), destination);
 	set_course(compass.direction);
 	set_speed(speed);
 	ship_state = State_ship::MOVING_TO_POSITION;
 	docked_at = nullptr;
 	cout << get_name() << " will sail on ";
 	print_course_and_speed();
-	cout << " to " << destination_position << endl;
+	cout << " to " << destination << endl;
 }
 
 // Start moving on a course and speed
