@@ -14,6 +14,9 @@
 using namespace std;
 using namespace placeholders;
 
+const char* const ISLAND_NOT_FOUND_MSG = "Island not found!";
+const char* const SHIP_NOT_FOUND_MSG = "Ship not found!";
+
 Model* g_Model_ptr;
 
 // create the initial objects, output constructor message
@@ -51,8 +54,10 @@ Model::~Model()
 Island* Model::get_island_ptr(const std::string& name) const
 {
     string shortened_name = name.substr(0, SHORTEN_NAME_LENGTH);
-    if (!is_island_present(shortened_name)) throw Error("Island not found!");
-    return (*islands.find(shortened_name)).second;
+    if (!is_island_present(shortened_name)) throw Error(ISLAND_NOT_FOUND_MSG);
+    Island *island = (*islands.find(shortened_name)).second;
+    if (island->get_name() != name) throw Error(ISLAND_NOT_FOUND_MSG);
+    return island;
 }
 
 // add a new ship to the list, and update the view
@@ -67,8 +72,10 @@ void Model::add_ship(Ship* ship)
 Ship* Model::get_ship_ptr(const std::string& name) const
 {
     string shortened_name = name.substr(0, SHORTEN_NAME_LENGTH);
-    if (!is_ship_present(shortened_name)) throw Error("Ship not found!");
-    return (*ships.find(shortened_name)).second;
+    if (!is_ship_present(shortened_name)) throw Error(SHIP_NOT_FOUND_MSG);
+    Ship *ship = (*ships.find(shortened_name)).second;
+    if (ship->get_name() != name) throw Error(SHIP_NOT_FOUND_MSG);
+    return ship;
 }
 
 // tell all objects to describe themselves
