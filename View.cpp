@@ -64,7 +64,8 @@ void View::draw()
 		int x, y;
 		if (get_subscripts(x, y, object.second))
 		{
-			if (map_view[y][x].empty()) map_view[y][x] = object.first.substr(0, SHORTEN_NAME_LENGTH);
+			cout << "x = " << x << ", y = " << y << endl;
+			if (map_view[y][x] == VIEW_NO_OBJECT) map_view[y][x] = object.first.substr(0, SHORTEN_NAME_LENGTH);
 			else map_view[y][x] = VIEW_MULTIPLE_OBJECT;
 		} else
 			objects_out_of_map.push_back(object.first);
