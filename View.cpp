@@ -49,6 +49,10 @@ void View::update_remove(const std::string& name)
 // prints out the current map
 void View::draw()
 {
+	// save cout flags
+	auto old_flags = cout.flags();
+	cout.precision(0);
+
 	vector<vector<string>> map_view;
 	vector<string> objects_out_of_map;
 	// a row in the map must start out filled only with VIEW_NO_OBJECTs
@@ -84,8 +88,6 @@ void View::draw()
 		}
 		cout << objects_out_of_map[objects_out_of_map.size() - 1] << " outside the map" << endl;
 	}
-	auto old_flags = cout.flags();
-	cout.precision(0);
 	// start from max y and iterate through map
 	for (int y = size - 1; y >= 0; y--)
 	{
@@ -105,6 +107,7 @@ void View::draw()
 		cout << setw(SHORTEN_NAME_LENGTH * VIEW_LINES_PER_AXIS_LABEL) << (origin.x + scale * x);
 	}
 	cout << endl;
+	// reinstate cout flags
 	cout.flags(old_flags);
 }
 
