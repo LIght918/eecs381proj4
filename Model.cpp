@@ -91,8 +91,8 @@ void Model::update()
     }
     for (auto&& dead_ship : dead_ships)
     {
-        objects.erase(dead_ship->get_name());
-        ships.erase(dead_ship->get_name());
+        objects.erase(dead_ship->get_name().substr(0, SHORTEN_NAME_LENGTH));
+        ships.erase(dead_ship->get_name().substr(0, SHORTEN_NAME_LENGTH));
         delete dead_ship;
     }
 }
