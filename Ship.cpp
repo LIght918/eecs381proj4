@@ -79,7 +79,7 @@ void Ship::update()
 			cout << get_name() << " stopped at " << get_location() << endl;
 			break;
 		case State_ship::DOCKED:
-			cout << get_name() << " docked at " << get_docked_Island() << endl;
+			cout << get_name() << " docked at " << get_docked_Island()->get_name() << endl;
 			break;
 		case State_ship::DEAD_IN_THE_WATER:
 			cout << get_name() << " dead in the water at " << get_location() << endl;
@@ -199,7 +199,7 @@ void Ship::dock(Island *island_ptr)
 	docked_at = island_ptr;
 	ship_state = State_ship::DOCKED;
 	g_Model_ptr->notify_location(get_name(), get_location());
-	cout << get_name() << " docked at " << island_ptr->get_name();
+	cout << get_name() << " docked at " << island_ptr->get_name() << endl;
 }
 
 // Refuel - must already be docked at an island; fill takes as much as possible
