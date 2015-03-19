@@ -22,7 +22,7 @@ Island::~Island()
 // update the amount on hand accordingly, and output the amount supplied.
 double Island::provide_fuel(double request)
 {
-    int min = request < fuel ? request : fuel;
+    double min = request < fuel ? request : fuel;
     fuel -= min;
     cout << "Island " << get_name() << " supplied " << min << " tons of fuel" << endl;
     return min;
