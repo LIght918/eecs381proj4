@@ -49,8 +49,7 @@ void View::update_remove(const std::string& name)
 // prints out the current map
 void View::draw()
 {
-	// save cout flags
-	auto old_flags = cout.flags();
+	// save precision and set to zero for printing the map
 	int old_precision = cout.precision();
 	cout.precision(0);
 
@@ -109,8 +108,7 @@ void View::draw()
 	}
 	cout << endl;
 
-	// restore cout flags
-	cout.flags(old_flags);
+	// restore precision
 	cout.precision(old_precision);
 }
 
