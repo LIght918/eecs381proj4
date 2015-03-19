@@ -72,6 +72,7 @@ void Controller::run()
         catch (Error& e)
         {
             cout << e.what() << endl;
+            cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
         }
         catch (...)
@@ -111,6 +112,7 @@ Island* Controller::read_island()
 {
     string name;
     cin >> name;
+    cout << "read island name " << name << endl;
     return g_Model_ptr->get_island_ptr(name);
 }
 
