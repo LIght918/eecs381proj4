@@ -49,9 +49,8 @@ void View::update_remove(const std::string& name)
 // prints out the current map
 void View::draw()
 {
-	// save precision and set to zero for printing the map
+	// save precision
 	int old_precision = cout.precision();
-	cout.precision(0);
 
 	vector<vector<string>> map_view;
 	vector<string> objects_out_of_map;
@@ -80,6 +79,7 @@ void View::draw()
 	}
 
 	cout << "Display size: " << size << ", scale: " << scale << ", origin: " << origin << endl;
+	cout.precision(0);
 	if (objects_out_of_map.size() > 0)
 	{
 		for (size_t i = 0; i < objects_out_of_map.size() - 1; i++)
