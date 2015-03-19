@@ -111,9 +111,8 @@ void View::draw()
 // or Error("New map size is too small!")
 void View::set_size(int size_)
 {
-	cout << "desired size = " << size_ << endl;
-	if (size <= 6) throw Error("New map size is too small!");
-	if (size > 30) throw Error("New map size is too big!");
+	if (size_ <= 6) throw Error("New map size is too small!");
+	if (size_ > 30) throw Error("New map size is too big!");
 	size = size_;
 }
 
