@@ -91,13 +91,14 @@ void Tanker::update()
         case State_tanker::NO_CARGO_DEST:
             return;
         case State_tanker::MOVING_TO_LOAD:
+            if (is_moving()) return;
+            dock(load_dest);
+            tanker_state = State_tanker::LOADING;
+            return;
         case State_tanker::MOVING_TO_UNLOAD:
-            if (!is_moving())
-            {
-                bool moving_to_load = tanker_state == State_tanker::MOVING_TO_LOAD;
-                dock(moving_to_load ? load_dest : unload_dest);
-                tanker_state = moving_to_load ? State_tanker::LOADING : State_tanker::UNLOADING;
-            }
+            if (is_moving()) return;
+            dock(unload_dest);
+            tanker_state = State_tanker::UNLOADING;
             return;
         case State_tanker::LOADING:
             refuel();
