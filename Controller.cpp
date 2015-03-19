@@ -112,7 +112,6 @@ Island* Controller::read_island()
 {
     string name;
     cin >> name;
-    cout << "read island name " << name << endl;
     return g_Model_ptr->get_island_ptr(name);
 }
 
@@ -143,7 +142,10 @@ bool Controller::view_zoom(View *view)
 }
 bool Controller::view_pan(View *view)
 {
-    view->set_origin(Point(read_double(), read_double()));
+    double point_x, point_y;
+    point_x = read_double();
+    point_y = read_double();
+    view->set_origin(Point(point_x, point_y));
     return false;
 }
 bool Controller::view_show(View *view)
@@ -171,7 +173,10 @@ bool Controller::model_create(View *view)
     if (g_Model_ptr->is_name_in_use(new_name)) throw Error("Name is already in use!");
     string new_type;
     cin >> new_type;
-    g_Model_ptr->add_ship(create_ship(new_name, new_type, Point(read_double(), read_double())));
+    double point_x, point_y;
+    point_x = read_double();
+    point_y = read_double();
+    g_Model_ptr->add_ship(create_ship(new_name, new_type, Point(point_x, point_y)));
     return false;
 }
 
@@ -184,11 +189,15 @@ void Controller::ship_course(Ship *ship)
 }
 void Controller::ship_position(Ship *ship)
 {
-    ship->set_destination_position_and_speed(Point(read_double(), read_double()), read_speed());
+    double point_x, point_y;
+    point_x = read_double();
+    point_y = read_double();
+    ship->set_destination_position_and_speed(Point(point_x, point_y), read_speed());
 }
 void Controller::ship_destination(Ship *ship)
 {
-    ship->set_destination_position_and_speed(read_island()->get_location(), read_speed());
+    Island *destination = read_island();
+    ship->set_destination_position_and_speed(destination->get_location(), read_speed());
 }
 void Controller::ship_load_at(Ship *ship)
 {
