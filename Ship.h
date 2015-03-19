@@ -152,7 +152,7 @@ private:
     Point destination;                    // Current destination if any
 
     double max_speed;                   // Maximum speed
-    double resistance;                  // Resistance of ship
+    int resistance;                  // Resistance of ship
 
     State_ship ship_state;                   // Current state of the ship
     Island *docked_at;                     // If docked, the island the ship is docked at

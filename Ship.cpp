@@ -146,7 +146,7 @@ void Ship::set_destination_position_and_speed(Point destination_position, double
 	set_speed(speed);
 	ship_state = State_ship::MOVING_TO_POSITION;
 	docked_at = nullptr;
-	cout << get_name() << " will sail on " << get_course() << " to " << destination_position << endl;
+	cout << get_name() << " will sail on course " << get_course() << " deg, speed " << get_speed() << " nm/hr to " << destination_position << endl;
 }
 
 // Start moving on a course and speed
@@ -159,7 +159,7 @@ void Ship::set_course_and_speed(double course, double speed)
 	set_speed(speed);
 	ship_state = State_ship::MOVING_ON_COURSE;
 	docked_at = nullptr;
-	cout << get_name() << " will sail on " << get_course() << endl;
+	cout << get_name() << " will sail on course " << get_course() << " deg, speed " << get_speed() << " nm/hr" << endl;
 }
 
 // Stop moving
