@@ -38,6 +38,7 @@ void Island::accept_fuel(double amount)
 // if production_rate > 0, compute production_rate * unit time, and add to amount, and print an update message
 void Island::update()
 {
+    if (production_rate <= 0) return;
     fuel += production_rate;
     cout << "Island " << get_name() << " now has " << fuel << " tons" << endl;
 }
