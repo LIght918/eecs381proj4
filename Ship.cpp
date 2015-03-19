@@ -141,7 +141,7 @@ void Ship::set_destination_position_and_speed(Point destination_position, double
 {
 	check_movement_and_speed(speed);
 	Compass_vector compass(get_location(), destination_position);
-	set_course_and_speed(compass.direction, speed);
+	Track_base::set_course_and_speed(compass.direction, speed);
 	ship_state = State_ship::MOVING_TO_POSITION;
 	docked_at = nullptr;
 	cout << get_name() << " will sail on " << get_course() << " to " << destination_position << endl;
@@ -153,7 +153,7 @@ void Ship::set_destination_position_and_speed(Point destination_position, double
 void Ship::set_course_and_speed(double course, double speed)
 {
 	check_movement_and_speed(speed);
-	set_course_and_speed(course, speed);
+	Track_base::set_course_and_speed(course, speed);
 	ship_state = State_ship::MOVING_ON_COURSE;
 	docked_at = nullptr;
 	cout << get_name() << " will sail on " << get_course() << endl;
@@ -181,7 +181,7 @@ void Ship::dock(Island *island_ptr)
 	{
 		throw Error("Can't dock!");
 	}
-	set_position(island_ptr->get_location());
+	Track_base::set_position(island_ptr->get_location());
 	docked_at = island_ptr;
 	ship_state = State_ship::DOCKED;
 	g_Model_ptr->notify_location(get_name(), get_location());
