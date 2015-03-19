@@ -184,11 +184,13 @@ void Controller::ship_course(Ship *ship)
 }
 void Controller::ship_position(Ship *ship)
 {
-    ship->set_destination_position_and_speed(Point(read_double(), read_double()), read_speed());
+    Point destination(read_double(), read_double());
+    ship->set_destination_position_and_speed(destination, read_speed());
 }
 void Controller::ship_destination(Ship *ship)
 {
-    ship->set_destination_position_and_speed(read_island()->get_location(), read_speed());
+    Island *destination = read_island();
+    ship->set_destination_position_and_speed(destination->get_location(), read_speed());
 }
 void Controller::ship_load_at(Ship *ship)
 {
