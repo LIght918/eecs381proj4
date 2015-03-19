@@ -45,7 +45,7 @@ void Island::update()
 // output information about the current state
 void Island::describe() const
 {
-    cout << "\nIsland " << get_name() << " at position " << position << "\nFuel available: " << fuel << " tons";
+    cout << "\nIsland " << get_name() << " at position " << position << "\nFuel available: " << fuel << " tons" << endl;
 }
 
 // ask model to notify views of current state
