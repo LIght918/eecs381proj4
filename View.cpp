@@ -51,11 +51,17 @@ void View::draw()
 {
 	vector<vector<string>> map_view;
 	vector<string> objects_out_of_map;
-	// make sure the map is big enough for what we want
-	map_view.reserve(size);
-	for_each(map_view.begin(), map_view.end(), [this](vector<string>& row) {row.reserve(size);});
-	// fill the map with the empty object icon
-	for_each(map_view.begin(), map_view.end(), [](vector<string>& row) {fill(row.begin(), row.end(), VIEW_NO_OBJECT);});
+	// a row in the map must start out filled only with VIEW_NO_OBJECTs
+	vector<string> initial_row;
+	for (int i = 0; i < size; i++)
+	{
+		initial_row.push_back(VIEW_NO_OBJECT);
+	}
+	// fill the map with copies of the initial row
+	for (int i = 0; i < size; i++)
+	{
+		map_view.push_back(vector<string>(initial_row));
+	}
 
 	// generate the map
 	// each object in object_data is a pair where first is the name and second is the Point
