@@ -84,7 +84,7 @@ void Tanker::update()
     Ship::update();
     if (!can_move())
     {
-        if (tanker_state != State_tanker::NO_CARGO_DEST) end_cycle();
+        end_cycle();
         return;
     }
     double cargo_needed = cargo_capacity - cargo; // used in loading
